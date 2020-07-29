@@ -58,7 +58,7 @@ namespace Acklann.Plaid.Entity
         /// </summary>
         /// <value>The amount.</value>
         [JsonProperty("amount")]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// The ISO currency code of the transaction, either USD or CAD. Always null if unofficial_currency_code is non-null.

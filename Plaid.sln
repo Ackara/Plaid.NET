@@ -21,6 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.Demo", "tests\Plaid.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.MSTest", "tests\Plaid.MSTest\Plaid.MSTest.csproj", "{6099B593-99AD-44E2-99F1-F4E875268412}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plaid.MSTest", "Plaid.MSTest", "{7BC84AC1-7574-41CF-A81F-A8A95BA86796}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Plaid.MSTest\Tests\InstitiuationTest.cs = tests\Plaid.MSTest\Tests\InstitiuationTest.cs
+		tests\Plaid.MSTest\Tests\TransactionTest.cs = tests\Plaid.MSTest\Tests\TransactionTest.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

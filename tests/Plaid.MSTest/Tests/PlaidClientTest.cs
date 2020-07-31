@@ -64,64 +64,6 @@ namespace Acklann.Plaid.Tests
         }
 
         [TestMethod]
-        public void FetchInstitutionsAsync_should_retrieve_a_list_of_banks_that_matches_a_specified_query()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-
-            // Act
-            var request = new Institution.SearchRequest()
-            {
-                Query = "citi",
-            }.UseDefaults();
-
-            var result = sut.FetchInstitutionsAsync(request).Result;
-
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Institutions.Length.ShouldBeGreaterThanOrEqualTo(1);
-            result.Institutions.ShouldAllBe(i => i.Name.ToLower().Contains(request.Query.ToLower()));
-        }
-
-        [TestMethod]
-        public void FetchInstitutionByIdAsync_should_retrieve_a_bank_that_matches_a_specified_id()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-
-            // Act
-            var request = new Institution.SearchByIdRequest()
-            {
-                InstitutionId = "ins_109511"
-            }.UseDefaults();
-            var response = sut.FetchInstitutionByIdAsync(request).Result;
-
-            // Assert
-            response.IsSuccessStatusCode.ShouldBeTrue();
-            response.RequestId.ShouldNotBeNullOrEmpty();
-            response.Institution.Id.ShouldBe(request.InstitutionId);
-        }
-
-        [TestMethod]
-        public void FetchTransactionsAsync_should_retrieve_a_list_of_transactions()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-
-            // Act
-            var request = new Transactions.GetTransactionsRequest().UseDefaults();
-            var result = sut.FetchTransactionsAsync(request).Result;
-
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.TransactionsReturned.ShouldBeGreaterThan(0);
-            result.Transactions.Length.ShouldBeGreaterThan(0);
-            result.Transactions[0].Amount.ShouldBeGreaterThan(0);
-        }
-
-        [TestMethod]
         public void FetchAccountBalanceAsync_should_retrieve_the_account_balances_of_an_user()
         {
             // Arrange

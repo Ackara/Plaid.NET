@@ -123,6 +123,16 @@ namespace Acklann.Plaid
         /* Institutions */
 
         /// <summary>
+        /// Retrieves the details on all financial institutions currently supported by Plaid.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;Institution.SearchResponse&gt;.</returns>
+        public Task<Institution.SearchResponse> FetchAllInstitutionsAsync(Institution.SearchAllRequest request)
+        {
+            return PostAsync<Institution.SearchResponse>("institutions/get", request);
+        }
+
+        /// <summary>
         /// Retrieves the institutions that match the query parameters.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -242,8 +252,8 @@ namespace Acklann.Plaid
             return PostAsync<Transactions.GetTransactionsResponse>("transactions/get", request);
         }
 
-
         /* Stripe */
+
         /// <summary>
         ///  Exchanges a Link access_token for an Stripe API stripe_bank_account_token.
         /// </summary>
@@ -253,7 +263,6 @@ namespace Acklann.Plaid
         {
             return PostAsync<Management.StripeTokenResponse>("processor/stripe/bank_account_token/create", request);
         }
-
 
         /* ***** */
 

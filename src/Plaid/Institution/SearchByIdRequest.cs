@@ -16,10 +16,36 @@ namespace Acklann.Plaid.Institution
         public string InstitutionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the public_key.
+        /// Gets or sets the secret.
         /// </summary>
-        /// <value>The public key.</value>
-        [JsonProperty("public_key")]
-        public string PublicKey { get; set; }
+        /// <value>The secret.</value>
+        [JsonProperty("secret")]
+        public string Secret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client_id.
+        /// </summary>
+        /// <value>The client identifier.</value>
+        [JsonProperty("client_id")]
+        public string ClientId { get; set; }
+
+        [JsonProperty("options")]
+        public AdditionalOptions Options { get; set; }
+
+        public struct AdditionalOptions
+        {
+            /// <summary>
+            /// Gets or sets a value indicating whether to add an institution's logo, brand color, and URL.
+            /// </summary>
+            /// <remarks>When available, the bank's logo is returned as a base64 encoded 152x152 PNG, the brand color is in hexadecimal format.</remarks>
+            [JsonProperty("include_optional_metadata")]
+            public bool InclueMetadata { get; set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether to  include status information about the institution.
+            /// </summary>
+            [JsonProperty("include_status")]
+            public bool IncludeStatus { get; set; }
+        }
     }
 }

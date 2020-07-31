@@ -1,36 +1,9 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Acklann.Plaid.Institution
 {
-    /// <summary>
-    /// Represents a request for plaid's '/institutions/search' endpoints. The '/institutions/search' endpoint to retrieve a complete list of supported institutions that match the query.
-    /// </summary>
-    /// <seealso cref="Acklann.Plaid.SerializableContent" />
-    public class SearchRequest : SerializableContent
+    public class SearchAllRequest : SerializableContent
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchRequest"/> class.
-        /// </summary>
-        public SearchRequest()
-        {
-            NullValueHandling = NullValueHandling.Include;
-            Options = new AdditionalOptions();
-        }
-
-        /// <summary>
-        /// Gets or sets the query.
-        /// </summary>
-        /// <value>The query.</value>
-        [JsonProperty("query")]
-        public string Query { get; set; }
-
-        /// <summary>
-        /// Gets or sets the supported products.
-        /// </summary>
-        /// <value>The products.</value>
-        [JsonProperty("products")]
-        public string[] Products { get; set; }
-
         /// <summary>
         /// Gets or sets the secret.
         /// </summary>
@@ -45,11 +18,30 @@ namespace Acklann.Plaid.Institution
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the total number of Institutions to return.
+        /// </summary>
+        [JsonProperty("count")]
+        public int Take { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of Institutions to skip before returning results.
+        /// </summary>
+        [JsonProperty("offset")]
+        public int Skip { get; set; }
+
         [JsonProperty("options")]
         public AdditionalOptions Options { get; set; }
 
         public struct AdditionalOptions
         {
+            /// <summary>
+            /// Gets or sets the supported products.
+            /// </summary>
+            /// <value>The products.</value>
+            [JsonProperty("products")]
+            public string[] Products { get; set; }
+
             /// <summary>
             /// Gets or sets a value indicating whether to add an institution's logo, brand color, and URL.
             /// </summary>

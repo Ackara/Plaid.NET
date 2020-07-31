@@ -27,7 +27,6 @@ namespace Acklann.Plaid
         public static TRequest UseDefaults<TRequest>(this TRequest request)
         {
             PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
-            setProperty(nameof(Institution.SearchRequest.PublicKey), PublicKey);
             setProperty(nameof(RequestBase.AccessToken), AccessToken);
             setProperty(nameof(RequestBase.ClientId), ClientId);
             setProperty(nameof(RequestBase.Secret), Secret);
@@ -43,7 +42,6 @@ namespace Acklann.Plaid
         public static TRequest UseIntlDefaults<TRequest>(this TRequest request)
         {
             PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
-            setProperty(nameof(Institution.SearchRequest.PublicKey), PublicKey);
             setProperty(nameof(RequestBase.AccessToken), IntlAccessToken);
             setProperty(nameof(RequestBase.ClientId), ClientId);
             setProperty(nameof(RequestBase.Secret), Secret);

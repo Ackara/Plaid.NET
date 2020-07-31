@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
+using System;
+using static Acklann.Plaid.Management.CreateLinkTokenRequest;
 
 namespace Acklann.Plaid.Tests
 {
@@ -218,6 +220,39 @@ namespace Acklann.Plaid.Tests
             result.RequestId.ShouldNotBeNullOrEmpty();
             result.Income.Streams.Length.ShouldBeGreaterThan(0);
             result.Income.LastYearIncome.ShouldBeGreaterThan(0);
+        }
+
+        [TestMethod]
+        public void CreateLinkToken_should_retrieve_link_token_and_expiration()
+        {
+            // Arrange
+            string[] countryCodes = new string[] { "US" };
+
+            var user = new UserInfo
+            {
+                ClientUserId = Guid.NewGuid().ToString()
+            };
+
+            string[] products = new string[] { "auth" };
+
+            var sut = new PlaidClient(Environment.Sandbox);
+            var request = new Management.CreateLinkTokenRequest()
+            {
+                ClientName = "Example Client Name",
+                Language = "en",
+                CountryCodes = countryCodes,
+                User = user,
+                Products = products
+            }.UseDefaults();
+
+            // Act
+            var result = sut.CreateLinkToken(request).Result;
+
+            // Assert
+            result.IsSuccessStatusCode.ShouldBeTrue();
+            result.RequestId.ShouldNotBeNullOrEmpty();
+            result.LinkToken.ShouldNotBeNullOrEmpty();
+            result.Expiration.ShouldNotBeNullOrEmpty();
         }
     }
 }

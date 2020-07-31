@@ -2,6 +2,10 @@ using Newtonsoft.Json;
 
 namespace Acklann.Plaid.Institution
 {
+    /// <summary>
+    /// Represents a request for plaid's '/institutions/get' endpoint. The '/institutions/get' endpoint to retrieve a <see cref="Entity.Institution"/> with the specified id.
+    /// </summary>
+    /// <seealso cref="Acklann.Plaid.SerializableContent" />
     public class SearchAllRequest : SerializableContent
     {
         /// <summary>

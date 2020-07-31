@@ -8,8 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{5B75FA3C-948A-452C-B57A-74423429A422}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		build.ps1 = build.ps1
-		commands.json = commands.json
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -20,12 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.Demo", "tests\Plaid.Demo\Plaid.Demo.csproj", "{5FBDC2B1-A139-4685-99C1-6FF862C602FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.MSTest", "tests\Plaid.MSTest\Plaid.MSTest.csproj", "{6099B593-99AD-44E2-99F1-F4E875268412}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plaid.MSTest", "Plaid.MSTest", "{7BC84AC1-7574-41CF-A81F-A8A95BA86796}"
-	ProjectSection(SolutionItems) = preProject
-		tests\Plaid.MSTest\Tests\InstitiuationTest.cs = tests\Plaid.MSTest\Tests\InstitiuationTest.cs
-		tests\Plaid.MSTest\Tests\TransactionTest.cs = tests\Plaid.MSTest\Tests\TransactionTest.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

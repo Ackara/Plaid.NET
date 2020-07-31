@@ -226,24 +226,18 @@ namespace Acklann.Plaid.Tests
         public void CreateLinkToken_should_retrieve_link_token_and_expiration()
         {
             // Arrange
-            string[] countryCodes = new string[] { "US" };
-
-            var user = new UserInfo
-            {
-                ClientUserId = Guid.NewGuid().ToString()
-            };
-
-            string[] products = new string[] { "auth" };
-
             var sut = new PlaidClient(Environment.Sandbox);
             var request = new Management.CreateLinkTokenRequest()
             {
                 ClientName = "Example Client Name",
                 Language = "en",
-                CountryCodes = countryCodes,
-                User = user,
-                Products = products
-            }.UseDefaults();
+                CountryCodes = new string[] { "US" },
+                User = new UserInfo
+                {
+                    ClientUserId = Guid.NewGuid().ToString()
+                },
+                Products = new string[] { "auth" }
+            }.UseDefaultsWithNoAccessToken();
 
             // Act
             var result = sut.CreateLinkToken(request).Result;

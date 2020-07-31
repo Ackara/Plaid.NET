@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Acklann.Plaid.Management
 {
@@ -71,7 +72,12 @@ namespace Acklann.Plaid.Management
         [JsonProperty("link_customization_name")]
         public string LinkCustomizationName { get; set; }
 
-        // TODO: account filters
+        /// <summary>
+        /// Gets or sets the account filters.
+        /// </summary>
+        /// <value>The account filters.</value>
+        [JsonProperty("account_filters")]
+        public Dictionary<string, List<string>> AccountFilters { get; set; }
 
         /// <summary>
         /// Gets or sets the access_token.
@@ -87,7 +93,13 @@ namespace Acklann.Plaid.Management
         [JsonProperty("redirect_uri")]
         public string RedirectUri { get; set; }
 
-        // TODO: payment initiation
+        /// <summary>
+        /// Gets or sets the payment initiation.
+        /// </summary>
+        /// <value>The payment initiation.</value>
+        /// <remarks>Payment initiation still needs to be typed and fully implemented.</remarks>
+        [JsonProperty("payment_initiation")]
+        public object PaymentInitiation { get; set; }
 
         /// <summary>
         /// Represents an <see cref="Entity.User"/> metadata.

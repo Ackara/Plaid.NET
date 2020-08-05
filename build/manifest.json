@@ -3,8 +3,8 @@
   "description": "A client api for plaid.com banking service.",
   "version": {
     "major": 0,
-    "minor": 0,
-    "patch": 11
+    "minor": 1,
+    "patch": 0
   },
   "authors": "Ackara",
   "company": "Ackara",

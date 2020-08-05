@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Acklann.Plaid</AssemblyName>
     <RootNamespace>Acklann.Plaid</RootNamespace>
-    <AssemblyVersion>0.0.11</AssemblyVersion>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
     <PackageVersion>0.0.9</PackageVersion>
   </PropertyGroup>
 
@@ -20,11 +20,11 @@
     <PackageIconUrl>https://github.com/Ackara/Plaid.NET/raw/master/art/icon.png</PackageIconUrl>
 
     <Title>Plaid.NET</Title>
-    <Version>0.0.11</Version>
-    <AssemblyFileVersion>0.0.11</AssemblyFileVersion>
+    <Version>0.1.0</Version>
+    <AssemblyFileVersion>0.1.0</AssemblyFileVersion>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>https://github.com/Ackara/Plaid.NET/blob/master/changelog.md</PackageReleaseNotes>
-    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

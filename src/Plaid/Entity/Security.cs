@@ -68,7 +68,7 @@ namespace Acklann.Plaid.Entity
         public bool IsCashEquivalent { get; set; }
 
         /// <summary>
-        /// The security type of the holding. 
+        /// The security type of the holding.
         /// </summary>
         [JsonProperty("type")]
         public SecurityType Type { get; set; }
@@ -77,7 +77,7 @@ namespace Acklann.Plaid.Entity
         /// Price of the security at the close of the previous trading session. null for non-public securities.
         /// </summary>
         [JsonProperty("close_price")]
-        public float? ClosePrice { get; set; }
+        public decimal? ClosePrice { get; set; }
 
         /// <summary>
         /// Date for which close_price is accurate. Always null if close_price_as_of is null.

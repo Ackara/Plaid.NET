@@ -12,28 +12,28 @@ namespace Acklann.Plaid.Entity
         /// </summary>
         /// <value>The last year income.</value>
         [JsonProperty("last_year_income")]
-        public float LastYearIncome { get; set; }
+        public decimal LastYearIncome { get; set; }
 
         /// <summary>
         /// Gets or sets the last year income before tax.
         /// </summary>
         /// <value>The last year income before tax.</value>
         [JsonProperty("last_year_income_before_tax")]
-        public float LastYearIncomeBeforeTax { get; set; }
+        public decimal LastYearIncomeBeforeTax { get; set; }
 
         /// <summary>
         /// Gets or sets the projected yearly income.
         /// </summary>
         /// <value>The projected yearly income.</value>
         [JsonProperty("projected_yearly_income")]
-        public float ProjectedYearlyIncome { get; set; }
+        public decimal ProjectedYearlyIncome { get; set; }
 
         /// <summary>
         /// Gets or sets the projected yearly income before tax.
         /// </summary>
         /// <value>The projected yearly income before tax.</value>
         [JsonProperty("projected_yearly_income_before_tax")]
-        public float ProjectedYearlyIncomeBeforeTax { get; set; }
+        public decimal ProjectedYearlyIncomeBeforeTax { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of overlapping income streams.
@@ -80,14 +80,14 @@ namespace Acklann.Plaid.Entity
             /// </summary>
             /// <value>The monthly income.</value>
             [JsonProperty("monthly_income")]
-            public float MonthlyIncome { get; set; }
+            public decimal MonthlyIncome { get; set; }
 
             /// <summary>
             /// Gets or sets the confidence.
             /// </summary>
             /// <value>The confidence.</value>
             [JsonProperty("confidence")]
-            public float Confidence { get; set; }
+            public decimal Confidence { get; set; }
         }
     }
 }

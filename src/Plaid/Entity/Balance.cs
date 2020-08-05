@@ -12,21 +12,21 @@ namespace Acklann.Plaid.Entity
         /// </summary>
         /// <value>The current.</value>
         [JsonProperty("current")]
-        public float Current { get; set; }
+        public decimal Current { get; set; }
 
         /// <summary>
         /// Gets or sets the available balance.
         /// </summary>
         /// <value>The available.</value>
         [JsonProperty("available")]
-        public float? Available { get; set; }
+        public decimal? Available { get; set; }
 
         /// <summary>
         /// Gets or sets the account limit.
         /// </summary>
         /// <value>The limit.</value>
         [JsonProperty("limit")]
-        public float? Limit { get; set; }
+        public decimal? Limit { get; set; }
 
         /// <summary>
         /// Gets or sets the iso currency code.

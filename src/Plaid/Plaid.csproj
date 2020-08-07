@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Acklann.Plaid</AssemblyName>
     <RootNamespace>Acklann.Plaid</RootNamespace>
     <AssemblyVersion>0.0.12</AssemblyVersion>
-    <PackageVersion>0.0.9</PackageVersion>
+    <PackageVersion>0.0.12</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
@@ -24,7 +24,6 @@
     <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>https://github.com/Ackara/Plaid.NET/blob/master/changelog.md</PackageReleaseNotes>
-    <PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -34,19 +33,18 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+  </PropertyGroup>
+
   <ItemGroup Label="Package">
     <Content Include="..\..\license.txt">
       <Visible>false</Visible>
-      <PackagePath></PackagePath>
+      <PackagePath>license.txt</PackagePath>
     </Content>
-
     <Content Include="..\..\art\icon.png">
       <Visible>false</Visible>
-      <PackagePath></PackagePath>
-    </Content>
-
-    <Content Include="..\..\art\icon.png">
-      <PackagePath></PackagePath>
+      <PackagePath>icon.png</PackagePath>
     </Content>
   </ItemGroup>
 </Project>

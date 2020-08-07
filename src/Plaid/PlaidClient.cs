@@ -91,6 +91,16 @@ namespace Acklann.Plaid
         }
 
         /// <summary>
+        /// Creates a Link link_token.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Task<Management.CreateLinkTokenResponse> CreateLinkToken(Management.CreateLinkTokenRequest request)
+        {
+            return PostAsync<Management.CreateLinkTokenResponse>("link/token/create", request);
+        }
+
+        /// <summary>
         /// Exchanges a Link public_token for an API access_token.
         /// </summary>
         /// <param name="request">The request.</param>

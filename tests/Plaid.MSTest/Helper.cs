@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -29,6 +30,21 @@ namespace Acklann.Plaid
             PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
             setProperty(nameof(Institution.SearchRequest.PublicKey), PublicKey);
             setProperty(nameof(RequestBase.AccessToken), AccessToken);
+            setProperty(nameof(RequestBase.ClientId), ClientId);
+            setProperty(nameof(RequestBase.Secret), Secret);
+            return request;
+
+            void setProperty(string name, object value)
+            {
+                PropertyInfo target = properties.FirstOrDefault(p => p.Name == name);
+                if (target != null) target.SetValue(request, value);
+            }
+        }
+
+        public static TRequest UseDefaultsWithNoAccessToken<TRequest>(this TRequest request)
+        {
+            PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
+            setProperty(nameof(Institution.SearchRequest.PublicKey), PublicKey);
             setProperty(nameof(RequestBase.ClientId), ClientId);
             setProperty(nameof(RequestBase.Secret), Secret);
             return request;

@@ -9,6 +9,11 @@ namespace Acklann.Plaid.Management
     /// <seealso cref="Acklann.Plaid.SerializableContent" />
     public class CreateLinkTokenRequest : SerializableContent
     {
+        public CreateLinkTokenRequest()
+        {
+            Language = "en";
+        }
+
         /// <summary>
         /// Gets or sets the client identifier.
         /// </summary>

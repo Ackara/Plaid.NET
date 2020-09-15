@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="description" content="" /> <!-- 155 characters -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="~/stylesheets/app.css" asp-append-version="true" />
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <partial name="_Sprites" />
+    <environment include="Development"><partial name="_Debug"/></environment>
+
+    @RenderBody()
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"
+            asp-fallback-src="~/node_modules/knockout/build/output/knockout-latest.js"
+            asp-fallback-test="window.ko"
+            integrity="sha256-Tjl7WVgF1hgGMgUKZZfzmxOrtoSf8qltZ9wMujjGNQk="
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript"
+            src="~/scripts/app.js"
+            asp-append-version="true"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

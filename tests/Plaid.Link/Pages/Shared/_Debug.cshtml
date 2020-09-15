@@ -1,0 +1,32 @@
+<!-- -------------------- Pages\Shared\_Debug -------------------- -->
+<style type="text/css">
+    #debug{top:0;width:100%;z-index:1000;padding:2px 0;text-indent:1em;color:#f8f8ff;background:#1e1e1e;position:fixed;opacity:0;transition-property:opacity;transition-duration:500ms}#debug.is-active,#debug:hover{opacity:1}#debug span{color:#5f9ea0}#debug #debug-breakpoint-range,#debug #debug-device-range{font-size:x-small}#debug-breakpoint::after{content:"none"}#debug-device::after{content:"all"}@@media (max-width:479px){#debug-breakpoint::after{content:"S"}#debug-breakpoint-range::after{content:"[0 - 479]"}}@@media (min-width:480px) and (max-width:639px){#debug-breakpoint::after{content:"M"}#debug-breakpoint-range::after{content:"[480 - 639]"}}@@media (min-width:640px) and (max-width:1023px){#debug-breakpoint::after{content:"L"}#debug-breakpoint-range::after{content:"[640 - 1023]"}}@@media (min-width:1024px) and (max-width:1365px){#debug-breakpoint::after{content:"XL"}#debug-breakpoint-range::after{content:"[1024 - 1365]"}}@@media (min-width:1366px) and (max-width:1919px){#debug-breakpoint::after{content:"XXL"}#debug-breakpoint-range::after{content:"[1366 - 1919]"}}@@media (min-width:1920px){#debug-breakpoint::after{content:"XXXL"}#debug-breakpoint-range::after{content:"[>= 1919]"}}@@media (max-width:767px){#debug-device-range::after{content:"[0 - 767]"}#debug-device::after{content:"phone"}}@@media (min-width:768px) and (max-width:991px){#debug-device-range::after{content:"[768 - 991]"}#debug-device::after{content:"tablet"}}@@media (min-width:992px) and (max-width:1199px){#debug-device-range::after{content:"[768 - 1199]"}#debug-device::after{content:"laptop"}}
+</style>
+
+<div id="debug">
+    <div>
+        size: <span id="debug-size">0</span> |
+        breakpoint: <span id="debug-breakpoint"></span> <span id="debug-breakpoint-range"></span> |
+        device: <span id="debug-device"></span> <span id="debug-device-range"></span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var container = document.getElementById("debug");
+    var debugSize = document.getElementById("debug-size");
+    var timeoutID = -1;
+
+    function updateSize() {
+        debugSize.innerText = (window.innerWidth + " x " + window.innerHeight);
+        container.classList.add("is-active");
+
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(function () { container.classList.remove("is-active"); }, 5000);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+
+    container.addEventListener("click", function () {
+        this.style.display = "none";
+    });
+</script>

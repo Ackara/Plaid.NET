@@ -1,0 +1,73 @@
+@import "../modules/_all.scss";
+
+.interactive, .i {
+    cursor: pointer;
+}
+
+.is-hidden, .hide {
+    display: none !important;
+}
+
+
+
+// Pressure
+
+@include when-breakpoint-below($laptop-breakpoint) {
+    .hide-on-tablet, .hide-on-mobile {
+        display: none !important;
+    }
+
+    .wrap-on-tablet, .wrap-on-mobile {
+        flex-wrap: wrap;
+    }
+}
+
+@include when-breakpoint-below($tablet-breakpoint) {
+    .hide-on-phone, .hide-on-mobile {
+        display: none !important;
+    }
+
+    .wrap-on-phone, .wrap-on-mobile {
+        flex-wrap: wrap;
+    }
+}
+
+// Tension
+
+@include when-breakpoint-above($laptop-breakpoint) {
+    .hide-on-laptop, .hide-not-on-mobile {
+        display: none !important;
+    }
+}
+
+@include when-breakpoint-above($desktop-breakpoint) {
+    .hide-on-desktop, .hide-not-on-mobile {
+        display: none !important;
+    }
+}
+
+// IE9 And Above
+@include when-on-ie() {
+    .hide-on-ie {
+        display: none !important;
+    }
+}
+
+.tension-box {
+	margin: 0 auto;
+	max-width: $desktop-breakpoint;
+
+	$list: ($xl-breakpoint, $laptop-breakpoint, $tablet-breakpoint, $l-breakpoint, $phone-breakpoint, $m-breakpoint);
+	$n: length($list);
+
+	@for $i from 1 through $n {
+		@include when-breakpoint-below(nth($list, $i)) {
+			@if ($i == $n) {
+				max-width: nth($list, $i);
+			}
+			@else {
+				max-width: nth($list, ($i + 1));
+			}
+		}
+	}
+}

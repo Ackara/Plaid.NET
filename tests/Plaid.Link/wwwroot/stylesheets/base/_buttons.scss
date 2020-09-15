@@ -1,0 +1,52 @@
+@import "../modules/_all.scss";
+
+%button {
+    outline: none;
+    fill: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition-duration: 250ms;
+    background-color: transparent;
+    border: 1px solid $text-color;
+
+    &:visited {
+        color: inherit;
+    }
+
+    &.circular {
+        border-radius: 50%;
+    }
+}
+
+button, .btn {
+    @extend %button;
+    transition-property: background-color;
+
+    &:hover {
+        background-color: transparentize($accent-color1, 0.85);
+    }
+
+    &:disabled {
+        border: none;
+        background-color: grayscale($accent-color1) !important;
+    }
+
+    &.accent {
+        color: $accent-color1;
+        border-color: $accent-color1;
+    }
+}
+
+.accent-btn, .auto-load-btn {
+    @extend %button;
+    border-color: $accent-color1;
+    background-color: $accent-color1;
+    fill: lighten($accent-color1, 100);
+    color: lighten($accent-color1, 100);
+    transition-property: background-color;
+
+    &:hover {
+        background-color: lighten($accent-color1, 10);
+    }
+}

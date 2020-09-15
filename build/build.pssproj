@@ -30,6 +30,9 @@
     <Content Include="..\commands.json">
       <Link>commands.json</Link>
     </Content>
+    <Content Include="..\secrets.json">
+      <Link>secrets.json</Link>
+    </Content>
     <Content Include="manifest.json" />
     <Content Include="packages.config" />
   </ItemGroup>

@@ -1,0 +1,170 @@
+@import "../modules/_all.scss";
+
+body, html {
+    width: 100%;
+    fill: $text-color;
+    color: $text-color;
+    background-color: $background-color;
+}
+
+// Sizing
+// ===========================================================================
+
+.expand {
+    width: 100%;
+    height: 100%;
+}
+
+.expand-x, .w100 {
+    width: 100%;
+}
+
+.expand-y, .h100 {
+	height: 100%;
+}
+
+.w25 {
+	width: 25%;
+}
+
+
+.w50 {
+	width: 50%;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+// Alignment & Positioning
+// ===========================================================================
+
+%container {
+    display: flex;
+
+    &.wrap {
+        flex-wrap: wrap;
+    }
+
+    &.baseline {
+        align-items: baseline;
+    }
+}
+
+.row {
+    @extend %container;
+
+    &.center {
+        justify-content: center;
+    }
+
+    &.right {
+        justify-content: flex-end;
+    }
+
+    &.middle {
+        align-items: center;
+    }
+
+    &.bottom {
+        align-items: flex-end;
+    }
+
+    &.separate {
+        justify-content: space-between;
+    }
+}
+
+.column {
+    @extend %container;
+    flex-direction: column;
+
+    &.center {
+        align-items: center;
+    }
+
+    &.right {
+        align-items: flex-end;
+    }
+
+    &.middle {
+        justify-content: center;
+    }
+
+    &.bottom {
+        justify-content: flex-end;
+    }
+}
+
+// Spacing
+// ===========================================================================
+
+@each $i in (10, 25, 50, 100) {
+    .p#{$i} {
+        $tmp: ($i / 100);
+        padding: $tmp#{em};
+    }
+
+        .p#{$i}x {
+            $tmp: ($i / 100);
+            padding: 0 $tmp#{em};
+        }
+
+        .p#{$i}y {
+            $tmp: ($i / 100);
+            padding: $tmp#{em} 0;
+        }
+
+	.pl#{$i} {
+		$tmp: ($i / 100);
+		padding-left: $tmp#{em};
+	}
+
+	.pr#{$i} {
+		$tmp: ($i / 100);
+		padding-right: $tmp#{em};
+	}
+
+	.m#{$i} {
+		$tmp: ($i / 100);
+		margin: $tmp#{em};
+	}
+
+        .m#{$i}x {
+            $tmp: ($i / 100);
+            margin: 0 $tmp#{em};
+        }
+
+		.m#{$i}y {
+			$tmp: ($i / 100);
+			margin: $tmp#{em} 0;
+		}
+
+	.ml#{$i} {
+		$tmp: ($i / 100);
+		margin-left: $tmp#{em};
+	}
+
+	.mr#{$i} {
+		$tmp: ($i / 100);
+		margin-right: $tmp#{em};
+	}
+
+	.mt#{$i} {
+		$tmp: ($i / 100);
+		margin-top: $tmp#{em};
+	}
+
+	.mb#{$i} {
+		$tmp: ($i / 100);
+		margin-bottom: $tmp#{em};
+	}
+}
+
+.p1 {
+    padding: 1px;
+}
+
+.m1 {
+    margin: 1px;
+}

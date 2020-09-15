@@ -315,3 +315,4 @@ package-*.json
 [Ss]ecret*
 [Cc]redential*
 plaid.config
+[Aa]ppsettings.*

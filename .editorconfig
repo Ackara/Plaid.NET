@@ -1,0 +1,18 @@
+# To learn more about .editorconfig see https://editorconfig.org/
+
+################################
+# Core .editorconfig Options   #
+################################
+root = true
+
+# All files
+[*]
+end_of_line = crlf
+indent_style = tab
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+################################
+# .NET Conventions             #
+################################
+

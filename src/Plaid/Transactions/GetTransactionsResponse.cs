@@ -13,28 +13,24 @@ namespace Acklann.Plaid.Transactions
         /// <summary>
         /// Gets or sets the number of transactions returned.
         /// </summary>
-        /// <value>The number of transactions returned.</value>
         [JsonProperty("total_transactions")]
         public int TransactionsReturned { get; set; }
 
         /// <summary>
         /// Gets or sets the transactions.
         /// </summary>
-        /// <value>The transactions.</value>
         [JsonProperty("transactions")]
         public Transaction[] Transactions { get; set; }
 
         /// <summary>
         /// Gets or sets the item.
         /// </summary>
-        /// <value>The item.</value>
         [JsonProperty("item")]
         public Item Item { get; set; }
 
         /// <summary>
         /// Gets or sets the accounts.
         /// </summary>
-        /// <value>The accounts.</value>
         [JsonProperty("accounts")]
         public Account[] Accounts { get; set; }
     }

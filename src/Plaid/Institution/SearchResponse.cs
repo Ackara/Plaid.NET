@@ -1,5 +1,4 @@
-﻿using Acklann.Plaid.Entity;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Acklann.Plaid.Institution
 {

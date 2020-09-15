@@ -1,0 +1,113 @@
+// Breakpoints
+// ===========================================================================
+// LINK: [UI Fabric] https://developer.microsoft.com/en-us/fabric#/styles/web/layout
+// LINK: [Bootstrap] https://getbootstrap.com/docs/4.3/layout/overview/#responsive-breakpoints
+
+$s-breakpoint: 320px;
+$m-breakpoint: 480px;
+$phone-breakpoint: 576px;
+// phone
+$l-breakpoint: 640px;
+// tablet
+$tablet-breakpoint: 768px;
+// laptop
+$laptop-breakpoint: 992px;
+$xl-breakpoint: 1024px;
+// desktop
+$desktop-breakpoint: 1200px;
+$xxl-breakpoint: 1366px;
+$xxxl-breakpoint: 1920px;
+
+$all-breakpoints: $s-breakpoint, $m-breakpoint, $phone-breakpoint, $l-breakpoint, $tablet-breakpoint, $laptop-breakpoint, $xl-breakpoint, $desktop-breakpoint, $xxl-breakpoint, $xxxl-breakpoint;
+
+@mixin when-breakpoint-below($x) {
+    $x: $x - 1;
+
+    @media (max-width: $x) {
+        @content;
+    }
+}
+
+@mixin when-breakpoint-above($x) {
+    @media (min-width: $x) {
+        @content;
+    }
+}
+
+@mixin when-breakpoint-between($start, $end) {
+    $end: $end - 1;
+
+    @media (min-width: $start) and (max-width: $end) {
+        @content;
+    }
+}
+
+/** */
+@mixin transition-queries($start, $end, $property: max-width, $offset: 4) {
+    $n: length($all-breakpoints);
+    $diff: abs($start - $end);
+    $multiplier: 1;
+
+    @if $start > $end {
+        $multiplier: -1;
+    }
+
+    #{$property}: $start;
+
+    @for $i from $offset to $n {
+        $w: nth($all-breakpoints, ($i + 1));
+
+        @media (min-width: $w) {
+            #{$property}: round($start + ($diff * (($i + 1) / $n)) * $multiplier);
+        }
+    }
+}
+
+// Elevation
+// ===========================================================================
+// LINK: [Material CSS] https://materializecss.com/shadow.html
+// LINK: [UI Fabric] https://developer.microsoft.com/en-us/fabric#/styles/web/elevation
+
+/** Usage: cards, items and thumbnails.*/
+@mixin depth-2($color: black) {
+    box-shadow: 0 2px 2px 0 transparentize($color, 0.86), 0 3px 1px -2px transparentize($color, 0.88), 0 1px 5px 0 transparentize($color, 0.8);
+}
+
+/** Usage: command-bars, dropdowns and content-menus.*/
+@mixin depth-4($color: black) {
+    box-shadow: 0 4px 5px 0 transparentize($color, 0.86), 0 1px 10px 0 transparentize($color, 0.88), 0 2px 4px -1px transparentize($color, 0.7);
+}
+
+/** Usage: callouts, tooltips and hover-cards.*/
+@mixin depth-8($color: black) {
+    box-shadow: 0 8px 17px 2px transparentize($color, 0.86), 0 3px 14px 2px transparentize($color, 0.88), 0 5px 5px -3px transparentize($color, 0.8);
+}
+
+/** Usage: panels and popups.*/
+@mixin depth-16($color: black) {
+    box-shadow: 0 16px 24px 2px transparentize($color, 0.86), 0 6px 30px 5px transparentize($color, 0.88), 0 8px 10px -7px transparentize($color, 0.8);
+}
+
+/** Usage: panels and popups.*/
+@mixin depth-24($color: black) {
+    box-shadow: 0 24px 38px 3px transparentize($color, 0.86), 0 9px 46px 8px transparentize($color, 0.88), 0 11px 15px -7px transparentize($color, 0.8);
+}
+
+// Miscellaneous
+// ===========================================================================
+
+@mixin when-on-ie {
+    @media screen and (min-width:0\0) and (min-resolution: +72dpi) {
+        @content;
+    }
+}
+
+@mixin when-on-edge {
+    @supports (-ms-ime-align:auto) {
+        @content;
+    }
+}
+
+@mixin text-stroke($color: black, $width: 1px) {
+    text-shadow: ($width * -1) 0 $color, 0 $width $color, $width 0 $color, 0 ($width * -1) $color;
+}

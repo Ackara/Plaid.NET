@@ -1,194 +1,263 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
-using static Acklann.Plaid.Management.CreateLinkTokenRequest;
+using System.Linq;
 
 namespace Acklann.Plaid.Tests
 {
-    [TestClass]
-    public class PlaidClientTest
-    {
-        [TestMethod]
-        public void GetItemAsync_should_retrieve_the_item_associated_with_the_specified_access_token()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Management.GetItemRequest()
-            {
-            }.UseDefaults();
+	[TestClass]
+	public class PlaidClientTest
+	{
+		// ==================== Account ==================== //
 
-            // Act
-            var result = sut.FetchItemAsync(request).Result;
+		[TestMethod]
+		public void Can_retrieve_account_balances()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Item.Id.ShouldNotBeNullOrEmpty();
-            result.Item.InstitutionId.ShouldNotBeNullOrEmpty();
-            result.Item.BilledProducts.Length.ShouldBeGreaterThan(0);
-            result.Item.AvailableProducts.Length.ShouldBeGreaterThan(0);
-        }
+			// Act
+			var request = new Balance.GetBalanceRequest().UseDefaults();
+			var result = sut.FetchAccountBalanceAsync(request).Result;
 
-        [TestMethod]
-        public void ExchangePublicTokenAsync_should_retrieve_a_response_from_the_api_server()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
+			// Assert
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Accounts.Length.ShouldBeGreaterThanOrEqualTo(1);
+			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
+		}
 
-            // Act
-            var request = new Management.ExchangeTokenRequest()
-            {
-                PublicToken = "public-sandbox-5c224a01-8314-4491-a06f-39e193d5cddc"
-            }.UseDefaults();
-            var result = sut.ExchangeTokenAsync(request).Result;
+		[TestMethod]
+		public void Get_retrieve_bank_account_information()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Auth.GetAccountInfoRequest().UseDefaults();
 
-            // Assert
-            result.Exception.ShouldNotBeNull();
-            result.IsSuccessStatusCode.ShouldBeFalse();
-        }
+			// Act
+			var result = sut.FetchAccountInfoAsync(request).Result;
 
-        [TestMethod]
-        public void FetchCategoriesAsync_should_retrieve_the_api_category_list()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Category.GetCategoriesRequest()
-            {
-            }.UseDefaults();
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Accounts.Length.ShouldBeGreaterThan(0);
+			(result.Numbers.ACH.Length + result.Numbers.EFT.Length + result.Numbers.International.Length + result.Numbers.BACS.Length).ShouldBeGreaterThan(0);
+			result.Item.ShouldNotBeNull();
+		}
 
-            // Act
-            var result = sut.FetchCategoriesAsync(request).Result;
+		// ==================== Category ==================== //
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Categories.Length.ShouldBeGreaterThan(0);
-        }
+		[TestMethod]
+		public void Can_retrieve_plaid_category_list()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Category.GetCategoriesRequest().UseDefaults();
 
-        [TestMethod]
-        public void FetchAccountBalanceAsync_should_retrieve_the_account_balances_of_an_user()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
+			// Act
+			var result = sut.FetchCategoriesAsync(request).Result;
 
-            // Act
-            var request = new Balance.GetBalanceRequest().UseDefaults();
-            var result = sut.FetchAccountBalanceAsync(request).Result;
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Categories.Length.ShouldBeGreaterThan(0);
+		}
 
-            // Assert
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Accounts.Length.ShouldBeGreaterThanOrEqualTo(1);
-            result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
-        }
+		// ==================== Identity ==================== //
 
-        [TestMethod]
-        public void FetchAccountInfoAsync_should_retrieve_the_routing_numbers_of_an_user_accounts()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Auth.GetAccountInfoRequest()
-            {
-            }.UseDefaults();
+		[TestMethod]
+		public void Can_retrieve_personal_info_associated_with_an_account()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Identity.GetUserIdentityRequest()
+			{
+			}.UseDefaults();
 
-            // Act
-            var result = sut.FetchAccountInfoAsync(request).Result;
+			// Act
+			var result = sut.FetchUserIdentityAsync(request).Result;
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Accounts.Length.ShouldBeGreaterThan(0);
-            (result.Numbers.ACH.Length + result.Numbers.EFT.Length + result.Numbers.International.Length + result.Numbers.BACS.Length).ShouldBeGreaterThan(0);
-            result.Item.ShouldNotBeNull();
-        }
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Accounts.Length.ShouldBeGreaterThan(0);
+			result.Item.ShouldNotBeNull();
+		}
 
-        [TestMethod]
-        public void FetchAccountInfoAsync_International_Bacs_should_retrieve_the_routing_numbers_of_an_user_accounts()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Auth.GetAccountInfoRequest()
-            {
-            }.UseIntlDefaults();
+		// ==================== Institution ==================== //
 
-            // Act
-            var result = sut.FetchAccountInfoAsync(request).Result;
+		[TestMethod]
+		public void Can_paginate_institutions()
+		{
+			// Arrange
+			const int limit = 5;
+			var sut = new PlaidClient(Environment.Sandbox);
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Accounts.Length.ShouldBeGreaterThan(0);
-            result.Numbers.International.Length.ShouldBeGreaterThan(0);
-            result.Numbers.BACS.Length.ShouldBeGreaterThan(0);
-            result.Item.ShouldNotBeNull();
-        }
+			// Act
+			var request = new Institution.SearchAllRequest() { Take = limit }.UseDefaults();
+			var response1 = sut.FetchAllInstitutionsAsync(request).Result;
 
-        [TestMethod]
-        public void FetchUserIdentityAsync_should_retrieve_the_personal_info_of_an_user()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Identity.GetUserIdentityRequest()
-            {
-            }.UseDefaults();
+			request.Take = 1;
+			request.Skip = limit;
+			var response2 = sut.FetchAllInstitutionsAsync(request).Result;
 
-            // Act
-            var result = sut.FetchUserIdentityAsync(request).Result;
-            bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
-            if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
+			var page = response1.Institutions.Select(x => x.Id).ToArray();
+			var nextItem = response2.Institutions.First().Id;
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Accounts.Length.ShouldBeGreaterThan(0);
-            result.Item.ShouldNotBeNull();
-        }
+			// Assert
+			response1.IsSuccessStatusCode.ShouldBeTrue();
+			response2.IsSuccessStatusCode.ShouldBeTrue();
+			response1.Institutions.Length.ShouldBe(limit);
+			response2.Institutions.Length.ShouldBe(1);
 
-        [TestMethod]
-        public void FetchIncomeAsync_should_retrieve_the_monthly_earnings_of_an_user()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Income.GetIncomeRequest()
-            {
-            }.UseDefaults();
+			page.ShouldNotContain(nextItem);
+		}
 
-            // Act
-            var result = sut.FetchUserIncomeAsync(request).Result;
-            bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
-            if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
+		[TestMethod]
+		public void Can_retrieve_institutions_by_name()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.Income.Streams.Length.ShouldBeGreaterThan(0);
-            result.Income.LastYearIncome.ShouldBeGreaterThan(0);
-        }
+			// Act
+			var request = new Institution.SearchRequest() { Query = "citi" }.UseDefaults();
+			var result = sut.FetchInstitutionsAsync(request).Result;
 
-        [TestMethod]
-        public void CreateLinkToken_should_retrieve_link_token_and_expiration()
-        {
-            // Arrange
-            var sut = new PlaidClient(Environment.Sandbox);
-            var request = new Management.CreateLinkTokenRequest()
-            {
-                ClientName = "Example Client Name",
-                Language = "en",
-                CountryCodes = new string[] { "US" },
-                User = new UserInfo
-                {
-                    ClientUserId = Guid.NewGuid().ToString()
-                },
-                Products = new string[] { "auth" }
-            }.UseDefaultsWithNoAccessToken();
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Institutions.Length.ShouldBeGreaterThanOrEqualTo(1);
+			result.Institutions.ShouldAllBe(i => i.Name.ToLower().Contains(request.Query.ToLower()));
+		}
 
-            // Act
-            var result = sut.CreateLinkToken(request).Result;
+		[TestMethod]
+		public void Can_retrieve_institutions_by_id()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Institution.SearchByIdRequest().UseDefaults();
+			request.InstitutionId = "ins_109511";
+			request.Options = new Institution.SearchByIdRequest.AdditionalOptions
+			{
+				InclueMetadata = true
+			};
 
-            // Assert
-            result.IsSuccessStatusCode.ShouldBeTrue();
-            result.RequestId.ShouldNotBeNullOrEmpty();
-            result.LinkToken.ShouldNotBeNullOrEmpty();
-            result.Expiration.ShouldNotBeNullOrEmpty();
-        }
-    }
+			// Act
+			var response = sut.FetchInstitutionByIdAsync(request).Result;
+
+			// Assert
+			response.IsSuccessStatusCode.ShouldBeTrue();
+			response.RequestId.ShouldNotBeNullOrEmpty();
+			response.Institution.Id.ShouldBe(request.InstitutionId);
+			response.Institution.Name.ShouldNotBeNullOrEmpty();
+		}
+
+		// ==================== Management ==================== //
+
+		[TestMethod]
+		public void Can_create_link_token()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Management.CreateLinkTokenRequest()
+			{
+				ClientName = "Example Client Name",
+				Language = "en",
+				CountryCodes = new string[] { "US" },
+				User = new Management.CreateLinkTokenRequest.UserInfo
+				{
+					ClientUserId = Guid.NewGuid().ToString()
+				},
+				Products = new string[] { "auth" }
+			}.UseDefaultsWithNoAccessToken();
+
+			// Act
+			var result = sut.CreateLinkToken(request).Result;
+
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.LinkToken.ShouldNotBeNullOrEmpty();
+			result.Expiration.ShouldNotBeNullOrEmpty();
+		}
+
+		[TestMethod]
+		public void Can_exchange_link_token_for_access_token()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var request = new Management.ExchangeTokenRequest()
+			{
+				PublicToken = "public-sandbox-5c224a01-8314-4491-a06f-39e193d5cddc"
+			}.UseDefaults();
+			var result = sut.ExchangeTokenAsync(request).Result;
+
+			// Assert
+			result.Exception.ShouldNotBeNull();
+			result.IsSuccessStatusCode.ShouldBeFalse();
+		}
+
+		// ==================== Transaction ==================== //
+
+		[TestMethod]
+		public void Can_retrieve_transactions()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Transactions.GetTransactionsRequest().UseDefaults();
+
+			// Act
+			var result = sut.FetchTransactionsAsync(request).Result;
+
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.TransactionsReturned.ShouldBeGreaterThan(0);
+			result.Transactions.Length.ShouldBeGreaterThan(0);
+			result.Transactions[0].Amount.ShouldBeGreaterThan(0);
+		}
+
+		[TestMethod]
+		public void Can_retrieve_an_item()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Management.GetItemRequest().UseDefaults();
+
+			// Act
+			var result = sut.FetchItemAsync(request).Result;
+
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Item.Id.ShouldNotBeNullOrEmpty();
+			result.Item.InstitutionId.ShouldNotBeNullOrEmpty();
+			result.Item.BilledProducts.Length.ShouldBeGreaterThan(0);
+			result.Item.AvailableProducts.Length.ShouldBeGreaterThan(0);
+		}
+
+		[TestMethod]
+		public void Can_retrieve_the_monthly_earnings_of_an_user()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+			var request = new Income.GetIncomeRequest()
+			{
+			}.UseDefaults();
+
+			// Act
+			var result = sut.FetchUserIncomeAsync(request).Result;
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
+
+			// Assert
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Income.Streams.Length.ShouldBeGreaterThan(0);
+			result.Income.LastYearIncome.ShouldBeGreaterThan(0);
+		}
+	}
 }

@@ -313,7 +313,7 @@ namespace Acklann.Plaid
                 string json = request.ToJson();
                 Log(json, $"POST: '{url}'");
 
-                var body = Body(json);
+                HttpContent body = Body(json);
                 body.Headers.Add("Plaid-Version", this._apiVersion);
                 using (HttpResponseMessage response = await http.PostAsync(url, Body(json)))
                 {

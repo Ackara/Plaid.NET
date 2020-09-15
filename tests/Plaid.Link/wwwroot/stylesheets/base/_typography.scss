@@ -1,0 +1,125 @@
+@import "../modules/_all.scss";
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+%text {
+    &.right {
+        text-align: right;
+    }
+
+    &.center {
+        text-align: center;
+    }
+
+    &.middle {
+        vertical-align: middle;
+    }
+
+    &.wrap {
+        word-break: break-all;
+    }
+
+    &.no-wrap {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+p, a, span, strong, small, th, td, .text {
+    @extend %text;
+}
+
+h1, .leader {
+    @extend %text;
+    font-size: 3em;
+}
+
+h2, .sub-leader {
+    @extend %text;
+    font-size: 2.3em;
+}
+
+h3, .header {
+    @extend %text;
+    font-size: 1.8em;
+}
+
+h4, .sub-header {
+    @extend %text;
+    font-size: 1.5em;
+}
+
+h5, .alt-header {
+    @extend %text;
+    font-size: 1.3em;
+}
+
+h6, .alt-sub-header {
+    @extend %text;
+    font-size: 1.2em;
+}
+
+// Transformations
+// ===========================================================================
+
+.lcase {
+    text-transform: lowercase;
+}
+
+.ucase {
+    text-transform: uppercase;
+}
+
+.tcase {
+    text-transform: capitalize;
+}
+
+.bold, strong {
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+small, .small {
+    font-size: small;
+}
+
+.x-small {
+    font-size: x-small;
+}
+
+.pre {
+    white-space: pre;
+}
+
+// Colors
+// ===========================================================================
+
+.accent, .accent1 {
+    fill: $accent-color1;
+    color: $accent-color1;
+}
+
+.accent2 {
+    fill: $accent-color2;
+    color: $accent-color2;
+}
+
+.mute, .subtle {
+    fill: $mute-text-color;
+    color: $mute-text-color;
+}
+
+.invert {
+    fill: $background-color;
+    color: $background-color;
+}
+
+.highlight {
+    background-color: $accent-color1;
+}

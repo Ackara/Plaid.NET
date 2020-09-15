@@ -1,0 +1,32 @@
+@page
+@model Acklann.Plaid.Link.Pages.IndexPageModel
+<!-- -------------------- Pages\Index -------------------- -->
+@section head{
+	<link rel="stylesheet" type="text/css" href="~/stylesheets/app.css" asp-append-version="true" />
+	<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+}
+<main class="column center tension-box p100">
+	<header>
+
+		<h1>Open Plaid Link Sample</h1>
+
+		<button id="link-button" class="accent-btn p100">
+			<span>Open Plaid Link</span>
+		</button>
+
+		<div class="row middle mt50">
+			<span>Access Token: </span>
+			<span data-bind="text: accessToken"></span>
+		</div>
+	</header>
+</main>
+
+@section scripts{
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		var vm = new App.IndexPage({
+			token: "@(Model.LinkToken)"
+		});
+		ko.applyBindings(vm);
+	</script>
+}

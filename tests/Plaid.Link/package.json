@@ -1,0 +1,12 @@
+{
+	"name": "web",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"knockout": "3.5.1"
+	},
+	"devDependencies": {
+		"@types/knockout": "3.4.68",
+		"@types/plaid-link": "2.0.6"
+	}
+}

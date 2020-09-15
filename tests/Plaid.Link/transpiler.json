@@ -1,0 +1,18 @@
+{
+	"typescript":
+	{
+		"sourceFiles":
+		[
+			{
+				"outputFile": "wwwroot/scripts/app.ts",
+				"include":
+				[
+					"wwwroot/scripts/**/*.ts"
+				]
+			}
+		]
+	},
+	"sass":
+	{
+	}
+}

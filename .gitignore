@@ -311,6 +311,9 @@ package-*.json
 # Approval Tests
 *.received.*
 
+# Generated Files
+*.map
+
 # Sensitive Files
 [Ss]ecret*
 [Cc]redential*

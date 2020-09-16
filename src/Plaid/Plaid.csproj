@@ -3,16 +3,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Acklann.Plaid</AssemblyName>
     <RootNamespace>Acklann.Plaid</RootNamespace>
-    <AssemblyVersion>0.0.14</AssemblyVersion>
+    <AssemblyVersion>0.0.15</AssemblyVersion>
     <PackageVersion>0.0.12</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
     <Title>Plaid.NET</Title>
-    <Version>0.0.14</Version>
+    <Version>0.0.15</Version>
     <PackageVersion>0.0.9</PackageVersion>
     <AssemblyVersion>0.0.12</AssemblyVersion>
-    <AssemblyFileVersion>0.0.14</AssemblyFileVersion>
+    <AssemblyFileVersion>0.0.15</AssemblyFileVersion>
 
     <Authors>Ackara</Authors>
     <Company>Ackara</Company>

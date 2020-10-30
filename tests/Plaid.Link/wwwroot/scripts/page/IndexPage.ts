@@ -1,20 +1,21 @@
 /// <reference path="../../../node_modules/@types/knockout/index.d.ts" />
 /// <reference path="../../../typings/server.d.ts" />
+/// <reference path="../components/Clipboard.ts" />
 /// <reference path="../domain/Server.ts" />
 
 declare var Plaid: any;
 
-namespace App {
+namespace PlaidLink {
 	interface PageModel {
 		token: string;
+		accessToken: string;
 	}
 
 	export class IndexPage {
 		constructor(model: PageModel) {
 			let me = this;
-			this.accessToken = ko.observable("");
-
-
+			this.accessToken = ko.observable(model.accessToken);
+			console.debug(model);
 			// Plaid Configuration
 
 			let handler = Plaid.create({
@@ -25,6 +26,7 @@ namespace App {
 						.then(function (data) {
 							console.debug(data);
 							me.accessToken(data.accessToken);
+							Clipboard.copy(data.accessToken);
 						});
 				},
 				onExit: function (error, metadata) {
@@ -37,5 +39,11 @@ namespace App {
 		}
 
 		public accessToken: KnockoutObservable<string>;
+
+		// ==================== Event Handlers ==================== //
+
+		public copyToClipboardButtonClicked(): void {
+			Clipboard.copy(this.accessToken());
+		}
 	}
 }

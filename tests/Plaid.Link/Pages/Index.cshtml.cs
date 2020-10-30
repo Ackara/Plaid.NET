@@ -12,9 +12,12 @@ namespace Acklann.Plaid.Link.Pages
 		{
 			_secrets = configuration.GetValue<string>("plaid:secret");
 			_clientId = configuration.GetValue<string>("plaid:client_id");
+			_access_token = AccessToken = configuration.GetValue<string>("plaid:access_token");
 		}
 
 		public string LinkToken { get; set; }
+
+		public string AccessToken { get; set; }
 
 		public async Task OnGetAsync()
 		{
@@ -37,7 +40,7 @@ namespace Acklann.Plaid.Link.Pages
 
 		#region Private Members
 
-		private readonly string _clientId, _secrets;
+		private readonly string _clientId, _secrets, _access_token;
 
 		#endregion Private Members
 	}

@@ -6,8 +6,7 @@
 	<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 }
 <main class="column center tension-box p100">
-	<header>
-
+	<section>
 		<h1>Open Plaid Link Sample</h1>
 
 		<button id="link-button" class="accent-btn p100">
@@ -17,15 +16,17 @@
 		<div class="row middle mt50">
 			<span>Access Token: </span>
 			<span data-bind="text: accessToken"></span>
+			<button class="p50" data-bind="click: copyToClipboardButtonClicked"><svg><use xlink:href="#copy-svg" /></svg></button>
 		</div>
-	</header>
+	</section>
 </main>
 
 @section scripts{
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 	<script type="text/javascript">
-		var vm = new App.IndexPage({
-			token: "@(Model.LinkToken)"
+		var vm = new PlaidLink.IndexPage({
+			token: "@(Model.LinkToken)",
+			accessToken: "@(Model.AccessToken)"
 		});
 		ko.applyBindings(vm);
 	</script>

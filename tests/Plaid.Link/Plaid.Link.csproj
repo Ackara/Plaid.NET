@@ -7,10 +7,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Sassin" Version="0.0.19-rc">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="TSBuild" Version="0.0.51-rc" />
+		<PackageReference Include="TSBuild" Version="0.0.63-beta" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,13 +26,13 @@
 		<CopyJsonProperty JPath="plaid" SourceFile="$(SecretFile)" DestinationFile="appsettings.json" Condition="Exists('$(SecretFile)')" />
 	</Target>
 
-	<Target Name="GenerateWebModels" BeforeTargets="PreBuildEvent">
+	<Target Name="GenerateWebModels" BeforeTargets="CompileTypescriptFiles">
 		<ItemGroup>
 			<ServerModels Include="Models\*.cs;..\$(SolutionName)\*.cs" />
 		</ItemGroup>
 
 		<Exec Command="npm install" Condition="!Exists('node_modules/')" />
 		<GenerateTypescriptModels SourceFiles="@(ServerModels)" DestinationFile="typings\server.d.ts" OutputType="Declaration" />
-		<GenerateTypescriptModels SourceFiles="@(ServerModels)" DestinationFile="wwwroot\scripts\models\Models.ts" OutputType="KnockoutJs" Namespace="App" Suffix="ObservableBase" References="../../../node_modules/@types/knockout/index.d.ts" />
+		<GenerateTypescriptModels SourceFiles="@(ServerModels)" DestinationFile="wwwroot\scripts\models\Models.ts" OutputType="KnockoutJs" Namespace="PlaidLink" Suffix="ObservableBase" References="../../../node_modules/@types/knockout/index.d.ts" />
 	</Target>
 </Project>

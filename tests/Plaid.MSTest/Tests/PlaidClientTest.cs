@@ -69,9 +69,7 @@ namespace Acklann.Plaid.Tests
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Identity.GetUserIdentityRequest()
-			{
-			}.UseDefaults();
+			var request = new Identity.GetUserIdentityRequest().UseDefaults();
 
 			// Act
 			var result = sut.FetchUserIdentityAsync(request).Result;
@@ -81,8 +79,11 @@ namespace Acklann.Plaid.Tests
 			// Assert
 			result.IsSuccessStatusCode.ShouldBeTrue();
 			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.Accounts.Length.ShouldBeGreaterThan(0);
 			result.Item.ShouldNotBeNull();
+			result.Accounts.Length.ShouldBeGreaterThan(0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.Names.Length > 0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.Addresses.Length > 0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.PhoneNumbers.Length > 0);
 		}
 
 		// ==================== Institution ==================== //

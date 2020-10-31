@@ -18,7 +18,7 @@ namespace PlaidLink {
 			console.debug(model);
 			// Plaid Configuration
 
-			let handler = Plaid.create({
+			this._dropIn = Plaid.create({
 				token: model.token,
 				onSuccess: function (public_token, metadata) {
 					console.debug(metadata);
@@ -33,17 +33,22 @@ namespace PlaidLink {
 				}
 			});
 
-			document.getElementById("link-button").addEventListener("click", function () {
-				handler.open();
-			});
+			if (!model.accessToken) {
+				this.onRefreshButtonClicked();
+			}
 		}
 
+		private _dropIn: any;
 		public accessToken: KnockoutObservable<string>;
 
 		// ==================== Event Handlers ==================== //
 
-		public copyToClipboardButtonClicked(): void {
+		public onCopyToClipboardButtonClicked(): void {
 			Clipboard.copy(this.accessToken());
+		}
+
+		public onRefreshButtonClicked(): void {
+			this._dropIn.open();
 		}
 	}
 }

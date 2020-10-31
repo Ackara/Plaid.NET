@@ -1,4 +1,3 @@
-using Acklann.Plaid;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -21,15 +20,15 @@ namespace Acklann.Plaid.Link.Pages
 
 		public async Task OnGetAsync()
 		{
-			var client = new PlaidClient(_clientId, _secrets, null, Acklann.Plaid.Environment.Sandbox);
-			var response = await client.CreateLinkToken(new Acklann.Plaid.Management.CreateLinkTokenRequest
+			var client = new PlaidClient(_clientId, _secrets, null, Environment.Sandbox);
+			var response = await client.CreateLinkToken(new Management.CreateLinkTokenRequest
 			{
 				ClientName = "Example",
 				ClientId = _clientId,
 				Secret = _secrets,
 				CountryCodes = new string[] { "US" },
 				Products = new string[] { "auth", "transactions" },
-				User = new Acklann.Plaid.Management.CreateLinkTokenRequest.UserInfo
+				User = new Management.CreateLinkTokenRequest.UserInfo
 				{
 					ClientUserId = Guid.NewGuid().ToString()
 				}

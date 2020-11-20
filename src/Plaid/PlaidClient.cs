@@ -221,7 +221,7 @@ namespace Acklann.Plaid
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Task&lt;Balance.GetBalanceResponse&gt;.</returns>
-        public Task<Balance.GetBalanceResponse> FetchAccountBalanceAsync(Balance.GetBalanceRequest request)
+        public Task<Balance.GetBalanceResponse> FetchAccountBalanceAsync(RequestBase request)
         {
             return PostAsync<Balance.GetBalanceResponse>("accounts/balance/get", request);
         }

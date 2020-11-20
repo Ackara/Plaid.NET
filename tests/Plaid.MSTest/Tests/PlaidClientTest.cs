@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using Shouldly;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Acklann.Plaid.Tests
@@ -259,6 +261,27 @@ namespace Acklann.Plaid.Tests
 			result.RequestId.ShouldNotBeNullOrEmpty();
 			result.Income.Streams.Length.ShouldBeGreaterThan(0);
 			result.Income.LastYearIncome.ShouldBeGreaterThan(0);
+		}
+
+		// ==================== Liabilities ==================== //
+
+		[TestMethod]
+		public void Can_retrieve_liabilities()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var request = new Liabilities.GetLiabilitiesRequest().UseDefaults();
+			var result = sut.FetchLiabilitiesAsync(request).Result;
+
+			// Assert
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Accounts.Length.ShouldBeGreaterThanOrEqualTo(1);
+			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
+			result.Liabilities.Credit.ShouldNotBeNull();
+			result.Liabilities.Mortgage.ShouldNotBeNull();
+			result.Liabilities.Student.ShouldNotBeNull();
 		}
 	}
 }

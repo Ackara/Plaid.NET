@@ -274,9 +274,19 @@ namespace Acklann.Plaid
             return PostAsync<Management.StripeTokenResponse>("processor/stripe/bank_account_token/create", request);
         }
 
-        /* ***** */
+		/// <summary>
+		/// Gets a libabilities response
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns>Task&lt;Liabilities.GetLiabilitiesResponse&gt;.</returns>
+		public Task<Liabilities.GetLiabilitiesResponse> FetchLiabilitiesAsync(Liabilities.GetLiabilitiesRequest request)
+		{
+			return PostAsync<Liabilities.GetLiabilitiesResponse>("liabilities/get", request);
+		}
 
-        internal string GetEndpoint(string path)
+		/* ***** */
+
+		internal string GetEndpoint(string path)
         {
             string subDomain = "";
             switch (_environment)

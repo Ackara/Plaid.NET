@@ -283,17 +283,19 @@ namespace Acklann.Plaid
 			return PostAsync<Identity.GetUserIdentityResponse>("identity/get", request);
 		}
 
-		/* Transactions */
-
 		/// <summary>
-		///  Retrieves user-authorized transaction data for credit and depository-type <see cref="Entity.Account"/>.
+		/// Gets a libabilities response
 		/// </summary>
 		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Transactions.GetTransactionsResponse&gt;.</returns>
-		public Task<Transactions.GetTransactionsResponse> FetchTransactionsAsync(Transactions.GetTransactionsRequest request)
+		/// <returns>Task&lt;Liabilities.GetLiabilitiesResponse&gt;.</returns>
+		public Task<Liabilities.GetLiabilitiesResponse> FetchLiabilitiesAsync(Liabilities.GetLiabilitiesRequest request)
 		{
-			return PostAsync<Transactions.GetTransactionsResponse>("transactions/get", request);
+			return PostAsync<Liabilities.GetLiabilitiesResponse>("liabilities/get", request);
 		}
+
+		/* ***** */
+
+		
 
 		/* Stripe */
 

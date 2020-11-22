@@ -23,7 +23,7 @@
     <RepositoryUrl>https://github.com/Ackara/Plaid.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>A client api for plaid.com banking service.</Description>
-    <PackageIconUrl>https://github.com/Ackara/Plaid.NET/raw/master/art/icon.png</PackageIconUrl>
+    <PackageIconUrl>icon.png</PackageIconUrl>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>

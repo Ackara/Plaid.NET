@@ -73,7 +73,7 @@ namespace Acklann.Plaid.Tests
 
 			// Act
 			var result = sut.FetchUserIdentityAsync(request).Result;
-			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == Exceptions.ErrorCode.InvalidProduct;
 			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
 			// Assert
@@ -251,7 +251,7 @@ namespace Acklann.Plaid.Tests
 
 			// Act
 			var result = sut.FetchUserIncomeAsync(request).Result;
-			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == Exceptions.ErrorCode.InvalidProduct;
 			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
 			// Assert

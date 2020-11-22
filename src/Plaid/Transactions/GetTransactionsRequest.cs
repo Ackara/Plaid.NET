@@ -54,7 +54,7 @@ namespace Acklann.Plaid.Transactions
                 get { return _count; }
                 set
                 {
-                    if (value < 1) _count = 1;
+                    if (value < 0) _count = 0;
                     else if (value > 500) _count = 500;
                     else _count = value;
                 }

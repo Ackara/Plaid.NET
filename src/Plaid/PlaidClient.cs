@@ -57,7 +57,6 @@ namespace Acklann.Plaid
 						   IHttpClientFactory factory = default,
 						   ILogger logger = default)
 		{
-			// 2019-05-29
 			_secret = secret;
 			_clientId = clientId;
 			_accessToken = accessToken;
@@ -81,6 +80,13 @@ namespace Acklann.Plaid
 			_baseUrl = $"https://{subDomain}.plaid.com";
 		}
 
+		/* Transactions */
+
+		public Task<Transactions.GetTransactionsResponse> FetchTransactionsAsync(Transactions.GetTransactionsRequest request)
+		{
+			return PostAsync<Transactions.GetTransactionsResponse>("/transactions/get", request);
+		}
+
 		/* Item Management */
 
 		/// <summary>
@@ -90,7 +96,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.GetItemResponse&gt;.</returns>
 		public Task<Management.GetItemResponse> FetchItemAsync(Management.GetItemRequest request)
 		{
-			return PostAsync<Management.GetItemResponse>("item/get", request);
+			return PostAsync<Management.GetItemResponse>("/item/get", request);
 		}
 
 		/// <summary>
@@ -100,7 +106,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.DeleteItemResponse&gt;.</returns>
 		public Task<Management.DeleteItemResponse> DeleteItemAsync(Management.DeleteItemRequest request)
 		{
-			return PostAsync<Management.DeleteItemResponse>("item/delete", request);
+			return PostAsync<Management.DeleteItemResponse>("/item/delete", request);
 		}
 
 		/// <summary>
@@ -110,7 +116,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.UpdateWebhookResponse&gt;.</returns>
 		public Task<Management.UpdateWebhookResponse> UpdateWebhookAsync(Management.UpdateWebhookRequest request)
 		{
-			return PostAsync<Management.UpdateWebhookResponse>("item/webhook/update", request);
+			return PostAsync<Management.UpdateWebhookResponse>("/item/webhook/update", request);
 		}
 
 		/// <summary>
@@ -120,7 +126,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
 		public Task<Management.CreatePublicTokenResponse> CreatePublicTokenAsync(Management.CreatePublicTokenRequest request)
 		{
-			return PostAsync<Management.CreatePublicTokenResponse>("item/public_token/create", request);
+			return PostAsync<Management.CreatePublicTokenResponse>("/item/public_token/create", request);
 		}
 
 		/// <summary>
@@ -130,7 +136,7 @@ namespace Acklann.Plaid
 		/// <returns></returns>
 		public Task<Management.CreateLinkTokenResponse> CreateLinkToken(Management.CreateLinkTokenRequest request)
 		{
-			return PostAsync<Management.CreateLinkTokenResponse>("link/token/create", request);
+			return PostAsync<Management.CreateLinkTokenResponse>("/link/token/create", request);
 		}
 
 		/// <summary>
@@ -140,7 +146,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
 		public Task<Management.ExchangeTokenResponse> ExchangeTokenAsync(Management.ExchangeTokenRequest request)
 		{
-			return PostAsync<Management.ExchangeTokenResponse>("item/public_token/exchange", request);
+			return PostAsync<Management.ExchangeTokenResponse>("/item/public_token/exchange", request);
 		}
 
 		/// <summary>
@@ -150,7 +156,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.RotateAccessTokenResponse&gt;.</returns>
 		public Task<Management.RotateAccessTokenResponse> RotateAccessTokenAsync(Management.RotateAccessTokenRequest request)
 		{
-			return PostAsync<Management.RotateAccessTokenResponse>("item/access_token/invalidate", request);
+			return PostAsync<Management.RotateAccessTokenResponse>("/item/access_token/invalidate", request);
 		}
 
 		/// <summary>
@@ -160,7 +166,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.UpdateAccessTokenVersionResponse&gt;.</returns>
 		public Task<Management.UpdateAccessTokenVersionResponse> UpdateAccessTokenVersion(Management.UpdateAccessTokenVersionRequest request)
 		{
-			return PostAsync<Management.UpdateAccessTokenVersionResponse>("item/access_token/update_version", request);
+			return PostAsync<Management.UpdateAccessTokenVersionResponse>("/item/access_token/update_version", request);
 		}
 
 		/* Institutions */
@@ -172,7 +178,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Institution.SearchResponse&gt;.</returns>
 		public Task<Institution.SearchResponse> FetchAllInstitutionsAsync(Institution.SearchAllRequest request)
 		{
-			return PostAsync<Institution.SearchResponse>("institutions/get", request);
+			return PostAsync<Institution.SearchResponse>("/institutions/get", request);
 		}
 
 		/// <summary>
@@ -182,7 +188,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Institution.SearchResponse&gt;.</returns>
 		public Task<Institution.SearchResponse> FetchInstitutionsAsync(Institution.SearchRequest request)
 		{
-			return PostAsync<Institution.SearchResponse>("institutions/search", request);
+			return PostAsync<Institution.SearchResponse>("/institutions/search", request);
 		}
 
 		/// <summary>
@@ -192,7 +198,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Institution.SearchByIdResponse&gt;.</returns>
 		public Task<Institution.SearchByIdResponse> FetchInstitutionByIdAsync(Institution.SearchByIdRequest request)
 		{
-			return PostAsync<Institution.SearchByIdResponse>("institutions/get_by_id", request);
+			return PostAsync<Institution.SearchByIdResponse>("/institutions/get_by_id", request);
 		}
 
 		/* Income */
@@ -204,7 +210,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Income.GetIncomeResponse&gt;.</returns>
 		public Task<Income.GetIncomeResponse> FetchUserIncomeAsync(Income.GetIncomeRequest request)
 		{
-			return PostAsync<Income.GetIncomeResponse>("income/get", request);
+			return PostAsync<Income.GetIncomeResponse>("/income/get", request);
 		}
 
 		/* Investments */
@@ -214,7 +220,7 @@ namespace Acklann.Plaid
 		/// </summary>
 		public Task<Investments.GetInvestmentHoldingsResponse> FetchInvestmentHoldingsAsync(Investments.GetInvestmentHoldingsRequest request)
 		{
-			return PostAsync<Investments.GetInvestmentHoldingsResponse>("investments/holdings/get", request);
+			return PostAsync<Investments.GetInvestmentHoldingsResponse>("/investments/holdings/get", request);
 		}
 
 		/// <summary>
@@ -222,7 +228,7 @@ namespace Acklann.Plaid
 		/// </summary>
 		public Task<Investments.GetInvestmentTransactionsResponse> FetchInvestmentTransactionsAsync(Investments.GetInvestmentTransactionsRequest request)
 		{
-			return PostAsync<Investments.GetInvestmentTransactionsResponse>("investments/transactions/get", request);
+			return PostAsync<Investments.GetInvestmentTransactionsResponse>("/investments/transactions/get", request);
 		}
 
 		/* Auth */
@@ -234,7 +240,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Auth.GetAccountInfoResponse&gt;.</returns>
 		public Task<Auth.GetAccountInfoResponse> FetchAccountInfoAsync(Auth.GetAccountInfoRequest request)
 		{
-			return PostAsync<Auth.GetAccountInfoResponse>("auth/get", request);
+			return PostAsync<Auth.GetAccountInfoResponse>("/auth/get", request);
 		}
 
 		/* Balance */
@@ -246,7 +252,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Balance.GetAccountResponse&gt;.</returns>
 		public Task<Balance.GetAccountResponse> FetchAccountAsync(Balance.GetAccountRequest request)
 		{
-			return PostAsync<Balance.GetAccountResponse>("accounts/get", request);
+			return PostAsync<Balance.GetAccountResponse>("/accounts/get", request);
 		}
 
 		/// <summary>
@@ -256,7 +262,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Balance.GetBalanceResponse&gt;.</returns>
 		public Task<Balance.GetBalanceResponse> FetchAccountBalanceAsync(Balance.GetBalanceRequest request)
 		{
-			return PostAsync<Balance.GetBalanceResponse>("accounts/balance/get", request);
+			return PostAsync<Balance.GetBalanceResponse>("/accounts/balance/get", request);
 		}
 
 		/* Categories */
@@ -268,7 +274,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Category.GetCategoriesResponse&gt;.</returns>
 		public Task<Category.GetCategoriesResponse> FetchCategoriesAsync(Category.GetCategoriesRequest request)
 		{
-			return PostAsync<Category.GetCategoriesResponse>("categories/get", request);
+			return PostAsync<Category.GetCategoriesResponse>("/categories/get", request);
 		}
 
 		/* Identity */
@@ -280,7 +286,7 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Identity.GetUserIdentityResponse&gt;.</returns>
 		public Task<Identity.GetUserIdentityResponse> FetchUserIdentityAsync(Identity.GetUserIdentityRequest request)
 		{
-			return PostAsync<Identity.GetUserIdentityResponse>("identity/get", request);
+			return PostAsync<Identity.GetUserIdentityResponse>("/identity/get", request);
 		}
 
 		/// <summary>
@@ -290,12 +296,10 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Liabilities.GetLiabilitiesResponse&gt;.</returns>
 		public Task<Liabilities.GetLiabilitiesResponse> FetchLiabilitiesAsync(Liabilities.GetLiabilitiesRequest request)
 		{
-			return PostAsync<Liabilities.GetLiabilitiesResponse>("liabilities/get", request);
+			return PostAsync<Liabilities.GetLiabilitiesResponse>("/liabilities/get", request);
 		}
 
 		/* ***** */
-
-		
 
 		/* Stripe */
 
@@ -306,34 +310,34 @@ namespace Acklann.Plaid
 		/// <returns>Task&lt;Management.StripeTokenResponse&gt;.</returns>
 		public Task<Management.StripeTokenResponse> FetchStripeTokenAsync(Management.StripeTokenRequest request)
 		{
-			return PostAsync<Management.StripeTokenResponse>("processor/stripe/bank_account_token/create", request);
+			return PostAsync<Management.StripeTokenResponse>("/processor/stripe/bank_account_token/create", request);
 		}
 
 		/* ***** */
 
 		internal async Task<TResponse> PostAsync<TResponse>(string path, SerializableContent request) where TResponse : ResponseBase, new()
 		{
-			EnsureCredentials(request);
+			SetCredentials(request);
 
-			string url = GetEndpoint(path);
-			string json = request.ToJson();
+			string endpoint = GetEndpoint(path);
+			string requestData = request.ToJson();
 
-			HttpContent body = new StringContent(json, Encoding.UTF8, "application/json");
+			HttpContent body = new StringContent(requestData, Encoding.UTF8, "application/json");
 			body.Headers.Add("Plaid-Version", _apiVersion);
 
-			WriteToDebugger(json, $"POST: '{url}'");
-			_logger?.LogTrace("Sent http request. POST: {0}\r\n{1}", url, json);
+			WriteToDebugger(requestData, $"POST: '{endpoint}'");
+			_logger?.LogTrace("Sent http request. POST: {0}\r\n{1}", endpoint, requestData);
 
 			HttpClient http = _httpClientFactory.CreateClient();
-			using (HttpResponseMessage response = await http.PostAsync(url, body))
+			using (HttpResponseMessage response = await http.PostAsync(endpoint, body))
 			{
 #if DEBUG
-				json = await response.Content.ReadAsStringAsync();
-				WriteToDebugger(json, $"RESPONSE ({response.StatusCode})");
+				requestData = await response.Content.ReadAsStringAsync();
+				WriteToDebugger(requestData, $"RESPONSE ({response.StatusCode})");
 #endif
-				_logger?.LogTrace("Received response ({1}) from 'POST: {0}'", url, (int)response.StatusCode);
+				_logger?.LogTrace("Received response ({1}) from 'POST: {0}'", endpoint, (int)response.StatusCode);
 
-				return await GetDeserializedResponseAsync<TResponse>(response);
+				return await CreateResponse<TResponse>(response);
 			}
 		}
 
@@ -341,7 +345,7 @@ namespace Acklann.Plaid
 
 		private string GetEndpoint(string path)
 		{
-			return string.Concat(_baseUrl, '/', path.Trim(' ', '\\', '/'));
+			return string.Concat(_baseUrl, path);
 		}
 
 		private readonly string _baseUrl;
@@ -366,7 +370,7 @@ namespace Acklann.Plaid
 			}
 		}
 
-		private async Task<TResponse> GetDeserializedResponseAsync<TResponse>(HttpResponseMessage response) where TResponse : ResponseBase, new()
+		private async Task<TResponse> CreateResponse<TResponse>(HttpResponseMessage response) where TResponse : ResponseBase, new()
 		{
 			using (Stream stream = await response.Content.ReadAsStreamAsync())
 			using (var reader = new StreamReader(stream))
@@ -399,7 +403,7 @@ namespace Acklann.Plaid
 			}
 		}
 
-		private void EnsureCredentials(object request)
+		private void SetCredentials(object request)
 		{
 			if (request is RequestBase req)
 			{

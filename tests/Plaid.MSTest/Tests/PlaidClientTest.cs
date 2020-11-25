@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using Shouldly;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace Acklann.Plaid.Tests
@@ -16,10 +14,10 @@ namespace Acklann.Plaid.Tests
 		public void Can_retrieve_account_balances()
 		{
 			// Arrange
+			var request = new Balance.GetBalanceRequest().UseDefaults();
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
-			var request = new Balance.GetBalanceRequest().UseDefaults();
 			var result = sut.FetchAccountBalanceAsync(request).Result;
 
 			// Assert
@@ -91,14 +89,17 @@ namespace Acklann.Plaid.Tests
 		// ==================== Institution ==================== //
 
 		[TestMethod]
-		public void Can_paginate_institutions()
+		public void Can_get_all_institutions()
 		{
 			// Arrange
 			const int limit = 5;
+			var request = new Institution.SearchAllRequest() { Take = limit };
+			request.CountryCodes = new string[] { "US" };
+			request.UseDefaults();
+
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
-			var request = new Institution.SearchAllRequest() { Take = limit }.UseDefaults();
 			var response1 = sut.FetchAllInstitutionsAsync(request).Result;
 
 			request.Take = 1;
@@ -118,13 +119,16 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
-		public void Can_retrieve_institutions_by_name()
+		public void Can_get_institutions_by_name()
 		{
 			// Arrange
+			var request = new Institution.SearchRequest().UseDefaults();
+			request.Query = "citi";
+			request.CountryCodes = new string[] { "US" };
+
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
-			var request = new Institution.SearchRequest() { Query = "citi" }.UseDefaults();
 			var result = sut.FetchInstitutionsAsync(request).Result;
 
 			// Assert
@@ -135,12 +139,13 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
-		public void Can_retrieve_institutions_by_id()
+		public void Can_get_institutions_by_id()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
 			var request = new Institution.SearchByIdRequest().UseDefaults();
 			request.InstitutionId = "ins_109511";
+			request.CountryCodes = new string[] { "US" };
 			request.Options = new Institution.SearchByIdRequest.AdditionalOptions
 			{
 				InclueMetadata = true

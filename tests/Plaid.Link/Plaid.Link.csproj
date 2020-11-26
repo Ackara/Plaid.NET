@@ -1,9 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<SolutionName>$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.IndexOf('.'))))</SolutionName>
-	</PropertyGroup>
+	
+<Title>Plaid.NET</Title>
+<Description>A client api for plaid.com banking service.</Description>
+<Version>0.1.0</Version>
+<AssemblyVersion>0.1.0</AssemblyVersion>
+<AssemblyFileVersion>0.1.0</AssemblyFileVersion>
+<PackageIcon>icon.png</PackageIcon>
+<RepositoryUrl>https://github.com/Ackara/Plaid.NET.git</RepositoryUrl>
+<PackageProjectUrl>https://github.com/Ackara/Plaid.NET</PackageProjectUrl>
+<PackageReleaseNotes>https://github.com/Ackara/Plaid.NET/blob/master/changelog.md</PackageReleaseNotes>
+<PackageTags>plaid banking api</PackageTags>
+<Authors>Ackara</Authors>
+<Company>Ackara</Company>
+<Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+<PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
+</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Sassin" Version="0.0.19-rc">
@@ -35,4 +50,6 @@
 		<GenerateTypescriptModels SourceFiles="@(ServerModels)" DestinationFile="typings\server.d.ts" OutputType="Declaration" />
 		<GenerateTypescriptModels SourceFiles="@(ServerModels)" DestinationFile="wwwroot\scripts\models\Models.ts" OutputType="KnockoutJs" Namespace="PlaidLink" Suffix="ObservableBase" References="../../../node_modules/@types/knockout/index.d.ts" />
 	</Target>
+
+
 </Project>

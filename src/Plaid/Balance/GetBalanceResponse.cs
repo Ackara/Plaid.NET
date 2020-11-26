@@ -22,6 +22,6 @@ namespace Acklann.Plaid.Balance
         /// </summary>
         /// <value>The item.</value>
         [JsonProperty("item")]
-        public Item Item { get; set; }
+        public Entity.Item Item { get; set; }
     }
 }

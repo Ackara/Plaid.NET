@@ -82,9 +82,22 @@ namespace Acklann.Plaid
 
 		/* Transactions */
 
+		/// <summary>
+		/// Fetches the transactions asynchronous.
+		/// </summary>
+		/// <param name="request">The request.</param>
 		public Task<Transactions.GetTransactionsResponse> FetchTransactionsAsync(Transactions.GetTransactionsRequest request)
 		{
 			return PostAsync<Transactions.GetTransactionsResponse>("/transactions/get", request);
+		}
+
+		/// <summary>
+		///  Initiates an on-demand extraction to fetch the newest transactions for an <see cref="Entity.Item"/>.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Transactions.RefreshTransactionResponse> RefreshTransactionsAsync(Transactions.RefreshTransactionRequest request)
+		{
+			return PostAsync<Transactions.RefreshTransactionResponse>("/transactions/refresh", request);
 		}
 
 		/* Item Management */
@@ -94,9 +107,9 @@ namespace Acklann.Plaid
 		/// </summary>
 		/// <param name="request">The request.</param>
 		/// <returns>Task&lt;Management.GetItemResponse&gt;.</returns>
-		public Task<Management.GetItemResponse> FetchItemAsync(Management.GetItemRequest request)
+		public Task<Item.GetItemResponse> FetchItemAsync(Item.GetItemRequest request)
 		{
-			return PostAsync<Management.GetItemResponse>("/item/get", request);
+			return PostAsync<Item.GetItemResponse>("/item/get", request);
 		}
 
 		/// <summary>
@@ -104,9 +117,9 @@ namespace Acklann.Plaid
 		/// </summary>
 		/// <param name="request">The request.</param>
 		/// <returns>Task&lt;Management.DeleteItemResponse&gt;.</returns>
-		public Task<Management.DeleteItemResponse> DeleteItemAsync(Management.DeleteItemRequest request)
+		public Task<Item.RemoveItemResponse> DeleteItemAsync(Item.RemoveItemRequest request)
 		{
-			return PostAsync<Management.DeleteItemResponse>("/item/delete", request);
+			return PostAsync<Item.RemoveItemResponse>("/item/remove", request);
 		}
 
 		/// <summary>
@@ -114,10 +127,15 @@ namespace Acklann.Plaid
 		/// </summary>
 		/// <param name="request">The request.</param>
 		/// <returns>Task&lt;Management.UpdateWebhookResponse&gt;.</returns>
-		public Task<Management.UpdateWebhookResponse> UpdateWebhookAsync(Management.UpdateWebhookRequest request)
+		public Task<Item.UpdateWebhookResponse> UpdateWebhookAsync(Item.UpdateWebhookRequest request)
 		{
-			return PostAsync<Management.UpdateWebhookResponse>("/item/webhook/update", request);
+			return PostAsync<Item.UpdateWebhookResponse>("/item/webhook/update", request);
 		}
+
+		/* Token */
+
+		// TODO: /link/token/get
+		// TODO: /item/access_token/invalidate
 
 		/// <summary>
 		/// Exchanges a Link public_token for an API access_token.
@@ -250,9 +268,9 @@ namespace Acklann.Plaid
 		/// </summary>
 		/// <param name="request">The request.</param>
 		/// <returns>Task&lt;Balance.GetAccountResponse&gt;.</returns>
-		public Task<Balance.GetAccountResponse> FetchAccountAsync(Balance.GetAccountRequest request)
+		public Task<Accounts.GetAccountResponse> FetchAccountAsync(Accounts.GetAccountRequest request)
 		{
-			return PostAsync<Balance.GetAccountResponse>("/accounts/get", request);
+			return PostAsync<Accounts.GetAccountResponse>("/accounts/get", request);
 		}
 
 		/// <summary>
@@ -360,16 +378,6 @@ namespace Acklann.Plaid
 			Converters = { new Exceptions.EnumMemberEnumConverter() }
 		};
 
-		private void Get(HttpResponseMessage response)
-		{
-			if (response.IsSuccessStatusCode)
-			{
-			}
-			else
-			{
-			}
-		}
-
 		private async Task<TResponse> CreateResponse<TResponse>(HttpResponseMessage response) where TResponse : ResponseBase, new()
 		{
 			using (Stream stream = await response.Content.ReadAsStreamAsync())
@@ -389,16 +397,6 @@ namespace Acklann.Plaid
 						StatusCode = response.StatusCode,
 						Exception = _serializer.Deserialize<Exceptions.PlaidException>(jsonReader)
 					};
-
-					//var error = JObject.Load(jsonReader);
-					//result.Exception = new Exceptions.PlaidException(error["error_message"]?.Value<string>())
-					//{
-					//	HelpLink = "https://plaid.com/docs/api/#errors-overview",
-					//	DisplayMessage = error["display_message"]?.Value<string>(),
-					//	ErrorType = error["error_type"]?.Value<string>(),
-					//	ErrorCode = error["error_code"]?.Value<string>(),
-					//	Source = response.RequestMessage.RequestUri.AbsoluteUri,
-					//};
 				}
 			}
 		}

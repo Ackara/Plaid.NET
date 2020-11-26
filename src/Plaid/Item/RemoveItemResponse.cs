@@ -1,10 +1,10 @@
-﻿namespace Acklann.Plaid.Management
+﻿namespace Acklann.Plaid.Item
 {
     /// <summary>
     /// Represents a response from plaid's '/item/delete' endpoints. The '/item/delete' endpoint allows you to delete an <see cref="Entity.Item"/>. Once deleted, the access_token associated with the Item is no longer valid and cannot be used to access any data that was associated with the <see cref="Entity.Item"/>.
     /// </summary>
     /// <seealso cref="Acklann.Plaid.ResponseBase" />
-    public class DeleteItemResponse : ResponseBase
+    public class RemoveItemResponse : ResponseBase
     {
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Entity.Item"/> was deleted.

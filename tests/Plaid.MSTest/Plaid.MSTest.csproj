@@ -1,10 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Acklann.Plaid</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-  </PropertyGroup>
+  
+<Title>Plaid.NET</Title>
+<Description>A client api for plaid.com banking service.</Description>
+<Version>0.1.0</Version>
+<AssemblyVersion>0.1.0</AssemblyVersion>
+<AssemblyFileVersion>0.1.0</AssemblyFileVersion>
+<PackageIcon>icon.png</PackageIcon>
+<RepositoryUrl>https://github.com/Ackara/Plaid.NET.git</RepositoryUrl>
+<PackageProjectUrl>https://github.com/Ackara/Plaid.NET</PackageProjectUrl>
+<PackageReleaseNotes>https://github.com/Ackara/Plaid.NET/blob/master/changelog.md</PackageReleaseNotes>
+<PackageTags>plaid banking api</PackageTags>
+<Authors>Ackara</Authors>
+<Company>Ackara</Company>
+<Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+<PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
+</PropertyGroup>
 
   <ItemGroup>
     <Content Include="..\..\secrets.json" Link="secrets.json">
@@ -40,5 +55,7 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
+
+
 
 </Project>

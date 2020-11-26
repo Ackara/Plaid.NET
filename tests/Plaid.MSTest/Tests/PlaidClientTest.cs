@@ -11,7 +11,28 @@ namespace Acklann.Plaid.Tests
 		// ==================== Account ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_account_balances()
+		public void Can_get_accounts()
+		{
+			// Arrange
+			var request = new Accounts.GetAccountRequest();
+			request.UseDefaults();
+
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var result = sut.FetchAccountAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.Item.ShouldNotBeNull();
+			result.Accounts.ShouldNotBeEmpty();
+		}
+
+		// ==================== Balance ==================== //
+
+		[TestMethod]
+		public void Can_get_account_balances()
 		{
 			// Arrange
 			var request = new Balance.GetBalanceRequest().UseDefaults();
@@ -26,8 +47,10 @@ namespace Acklann.Plaid.Tests
 			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
 		}
 
+		// ==================== Auth ==================== //
+
 		[TestMethod]
-		public void Get_retrieve_bank_account_information()
+		public void Can_get_bank_account_information()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
@@ -65,7 +88,7 @@ namespace Acklann.Plaid.Tests
 		// ==================== Identity ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_personal_info_associated_with_an_account()
+		public void Can_get_account_holder_information()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
@@ -77,6 +100,7 @@ namespace Acklann.Plaid.Tests
 			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
 			// Assert
+			result.ShouldNotBeNull();
 			result.IsSuccessStatusCode.ShouldBeTrue();
 			result.RequestId.ShouldNotBeNullOrEmpty();
 			result.Item.ShouldNotBeNull();
@@ -163,6 +187,8 @@ namespace Acklann.Plaid.Tests
 
 		// ==================== Management ==================== //
 
+		// ==================== Token ==================== //
+
 		[TestMethod]
 		public void Can_create_link_token()
 		{
@@ -211,7 +237,7 @@ namespace Acklann.Plaid.Tests
 		// ==================== Transaction ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_transactions()
+		public void Can_get_transactions()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
@@ -229,11 +255,30 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
+		public void Can_refresh_transactions()
+		{
+			// Arrange
+			var request = new Transactions.RefreshTransactionRequest();
+			request.UseDefaults();
+
+			// Act
+			var sut = new PlaidClient(Environment.Sandbox);
+			var result = sut.RefreshTransactionsAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+		}
+
+		// ==================== Item ==================== //
+
+		[TestMethod]
 		public void Can_retrieve_an_item()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Management.GetItemRequest().UseDefaults();
+			var request = new Item.GetItemRequest().UseDefaults();
 
 			// Act
 			var result = sut.FetchItemAsync(request).Result;
@@ -246,6 +291,31 @@ namespace Acklann.Plaid.Tests
 			result.Item.BilledProducts.Length.ShouldBeGreaterThan(0);
 			result.Item.AvailableProducts.Length.ShouldBeGreaterThan(0);
 		}
+
+		//[TestMethod]
+		public void Can_remove_an_item()
+		{
+			// Arrange
+			var request = new Item.RemoveItemRequest();
+			request.UseDefaults();
+
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var result = sut.DeleteItemAsync(request).Result;
+
+			// Assert
+			result.ShouldBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+		}
+
+		public void Can_update_webhook()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		// ==================== Income ==================== //
 
 		[TestMethod]
 		public void Can_retrieve_the_monthly_earnings_of_an_user()
@@ -287,6 +357,26 @@ namespace Acklann.Plaid.Tests
 			result.Liabilities.Credit.ShouldNotBeNull();
 			result.Liabilities.Mortgage.ShouldNotBeNull();
 			result.Liabilities.Student.ShouldNotBeNull();
+		}
+
+		// ==================== Investments ==================== //
+
+		//[TestMethod]
+		public void Can_get_investment_holdings()
+		{
+			// Arrange
+			var request = new Investments.GetInvestmentHoldingsRequest();
+			request.UseDefaults();
+
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var result = sut.FetchInvestmentHoldingsAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.Holdings.ShouldNotBeNull();
 		}
 	}
 }

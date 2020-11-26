@@ -1,4 +1,4 @@
-﻿namespace Acklann.Plaid.Balance
+﻿namespace Acklann.Plaid.Accounts
 {
     /// <summary>
     /// Represents a request for plaid's '/accounts/get' endpoint.

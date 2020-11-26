@@ -30,7 +30,7 @@ namespace Acklann.Plaid.Investments
         /// </summary>
         /// <value>The item.</value>
         [JsonProperty("item")]
-        public Item Item { get; set; }
+        public Entity.Item Item { get; set; }
 
         /// <summary>
         /// Gets or sets the accounts.

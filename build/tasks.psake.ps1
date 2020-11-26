@@ -66,6 +66,11 @@ Task "Package-Solution" -alias "pack" -description "This task generates all depl
 -depends @("restore") -action {
 	if (Test-Path $ArtifactsFolder) { Remove-Item $ArtifactsFolder -Recurse -Force; }
 	New-Item $ArtifactsFolder -ItemType Directory | Out-Null;
+
+	$version = $ManifestFilePath | Select-NcrementVersionNumber $EnvironmentName;
+	$project = Join-Path $SolutionFolder "src/*/*.*proj" | Get-Item;
+	Write-Separator "dotnet pack '$($project.Basename)-$version'";
+	Exec { &dotnet pack $project.FullName --output $ArtifactsFolder --configuration $Configuration -p:PackageVersion=$version; }
 }
 
 Task "Publish-NuGet-Packages" -alias "push-nuget" -description "This task publish all nuget packages to a nuget repository." `
@@ -76,18 +81,6 @@ Task "Publish-NuGet-Packages" -alias "push-nuget" -description "This task publis
         Write-Separator "dotnet nuget push '$($nupkg.Name)'";
         Exec { &dotnet nuget push $nupkg.FullName --source "https://api.nuget.org/v3/index.json"; }
     }
-}
-
-Task "Publish-VSIX-Package" -alias "push-vsix" -description "This task publish all VSIX packages to https://marketplace.visualstudio.com/" `
--precondition { return ($InProduction -or $InPreview ) -and (Test-Path $ArtifactsFolder -PathType Container) } `
--action {
-	[string]$vsixPublisher = Join-Path "$($env:ProgramFiles)*" "Microsoft Visual Studio\*\*\VSSDK\VisualStudioIntegration\Tools\Bin\VsixPublisher.exe" | Resolve-Path -ErrorAction Stop;
-	$package = Join-Path $ArtifactsFolder "*.vsix" | Get-Item;
-	$manifest = Join-Path $PSScriptRoot "publishing/visual-studio-marketplace.json" | Get-Item;
-	$pat = Get-Secret "VISUAL_STUDIO_MARKETPLACE_PAT" "vsixMarketplace";
-
-	Write-Separator "VsixPublish publish -payload '$($package.Name)'";
-	Exec { &$vsixPublisher publish -payload $package.FullName -publishManifest $manifest.FullName -personalAccessToken $pat -ignoreWarnings "VSIXValidatorWarning01,VSIXValidatorWarning02"; }
 }
 
 Task "Add-GitReleaseTag" -alias "tag" -description "This task tags the lastest commit with the version number." `

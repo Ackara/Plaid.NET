@@ -21,12 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.Link", "tests\Plaid.L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E24A7381-04EF-4807-B660-EC12698B2B31}"
 	ProjectSection(SolutionItems) = preProject
-		build\_.psake.ps1 = build\_.psake.ps1
-		build\build.pssproj = build\build.pssproj
+		build.ps1 = build.ps1
 		build\manifest.json = build\manifest.json
-		build\packages.config = build\packages.config
 		build\tasks.psake.ps1 = build\tasks.psake.ps1
-		build\toolkit.psm1 = build\toolkit.psm1
 	EndProjectSection
 EndProject
 Global

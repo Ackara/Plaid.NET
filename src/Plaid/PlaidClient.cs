@@ -34,7 +34,7 @@ namespace Acklann.Plaid
 		/// <param name="options">The options.</param>
 		/// <param name="factory">The factory.</param>
 		/// <param name="logger">The logger.</param>
-		public PlaidClient(PlaidOption options, IHttpClientFactory factory, ILogger<PlaidClient> logger) :
+		public PlaidClient(PlaidOption options, IHttpClientFactory factory, ILogger logger) :
 			this(options?.ClientId, options?.Secrets, options?.AccessToken, options.EnvironmentName, options?.Version, factory, logger)
 		{
 		}

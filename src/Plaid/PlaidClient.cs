@@ -403,11 +403,16 @@ namespace Acklann.Plaid
 
 		private void SetCredentials(object request)
 		{
-			if (request is RequestBase req)
+			if (request is AuthorizedRequestBase areq)
+			{
+				if (string.IsNullOrEmpty(areq.Secret)) areq.Secret = _secret;
+				if (string.IsNullOrEmpty(areq.ClientId)) areq.ClientId = _clientId;
+				if (string.IsNullOrEmpty(areq.AccessToken)) areq.AccessToken = _accessToken;
+			}
+			else if (request is RequestBase req)
 			{
 				if (string.IsNullOrEmpty(req.Secret)) req.Secret = _secret;
 				if (string.IsNullOrEmpty(req.ClientId)) req.ClientId = _clientId;
-				if (string.IsNullOrEmpty(req.AccessToken)) req.AccessToken = _accessToken;
 			}
 		}
 

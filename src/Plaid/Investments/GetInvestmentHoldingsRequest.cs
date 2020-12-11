@@ -7,7 +7,7 @@ namespace Acklann.Plaid.Investments
 	///
 	/// Every /investments/holdings/get response will contain a list of Securities, providing definitions for all security_id references in the response.
 	/// </summary>
-	public class GetInvestmentHoldingsRequest : RequestBase
+	public class GetInvestmentHoldingsRequest : AuthorizedRequestBase
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GetInvestmentHoldingsRequest"/> class.

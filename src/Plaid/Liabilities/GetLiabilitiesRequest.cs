@@ -3,7 +3,7 @@ using System;
 
 namespace Acklann.Plaid.Liabilities
 {
-	public class GetLiabilitiesRequest : RequestBase
+	public class GetLiabilitiesRequest : AuthorizedRequestBase
 	{
 		[JsonProperty("options")]
 		public AdditionalOptions Options { get; set; }

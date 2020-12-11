@@ -27,9 +27,9 @@ namespace Acklann.Plaid
 		public static TRequest UseDefaults<TRequest>(this TRequest request)
 		{
 			PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
-			setProperty(nameof(RequestBase.AccessToken), AccessToken);
-			setProperty(nameof(RequestBase.ClientId), ClientId);
-			setProperty(nameof(RequestBase.Secret), Secret);
+			setProperty(nameof(AuthorizedRequestBase.AccessToken), AccessToken);
+			setProperty(nameof(AuthorizedRequestBase.ClientId), ClientId);
+			setProperty(nameof(AuthorizedRequestBase.Secret), Secret);
 			return request;
 
 			void setProperty(string name, object value)
@@ -42,8 +42,8 @@ namespace Acklann.Plaid
 		public static TRequest UseDefaultsWithNoAccessToken<TRequest>(this TRequest request)
 		{
 			PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
-			setProperty(nameof(RequestBase.ClientId), ClientId);
-			setProperty(nameof(RequestBase.Secret), Secret);
+			setProperty(nameof(AuthorizedRequestBase.ClientId), ClientId);
+			setProperty(nameof(AuthorizedRequestBase.Secret), Secret);
 			return request;
 
 			void setProperty(string name, object value)
@@ -56,9 +56,9 @@ namespace Acklann.Plaid
 		public static TRequest UseIntlDefaults<TRequest>(this TRequest request)
 		{
 			PropertyInfo[] properties = request.GetType().GetTypeInfo().GetRuntimeProperties().ToArray();
-			setProperty(nameof(RequestBase.AccessToken), IntlAccessToken);
-			setProperty(nameof(RequestBase.ClientId), ClientId);
-			setProperty(nameof(RequestBase.Secret), Secret);
+			setProperty(nameof(AuthorizedRequestBase.AccessToken), IntlAccessToken);
+			setProperty(nameof(AuthorizedRequestBase.ClientId), ClientId);
+			setProperty(nameof(AuthorizedRequestBase.Secret), Secret);
 			return request;
 
 			void setProperty(string name, object value)

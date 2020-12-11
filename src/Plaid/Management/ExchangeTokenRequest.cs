@@ -6,13 +6,12 @@ namespace Acklann.Plaid.Management
 	/// Represents a request for plaid's '/item/public_token/exchange' endpoint. Exchange a Link public_token for an API access_token.
 	/// </summary>
 	/// <seealso cref="Acklann.Plaid.SerializableContent" />
-	public class ExchangeTokenRequest : SerializableContent
+	public class ExchangeTokenRequest : RequestBase
 	{
-		[JsonProperty("secret")]
-        public string Secret { get; set; }
-        [JsonProperty("public_token")]
-        public string PublicToken { get; set; }
-        [JsonProperty("client_id")]
-        public string ClientId { get; set; }
+		/// <summary>
+		/// Gets or sets the public token.
+		/// </summary>
+		[JsonProperty("public_token")]
+		public string PublicToken { get; set; }
 	}
 }

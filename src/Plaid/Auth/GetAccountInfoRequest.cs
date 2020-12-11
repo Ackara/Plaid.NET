@@ -8,8 +8,8 @@ namespace Acklann.Plaid.Auth
 	/// <remarks>
 	/// The Auth product performs two crucial functions. It translates bank access credentials (username and password) into an account and routing number. No input of account or routing number is necessary. It also validates the owner of this account number in a NACHA-compliant manner. This eliminates the need for micro-deposits or any other secondary authentication.
 	/// </remarks>
-	/// <seealso cref="Acklann.Plaid.RequestBase" />
-	public class GetAccountInfoRequest : RequestBase
+	/// <seealso cref="Acklann.Plaid.AuthorizedRequestBase" />
+	public class GetAccountInfoRequest : AuthorizedRequestBase
 	{
 		/// <summary>
 		/// Gets or sets the options attached to the request

@@ -46,7 +46,7 @@ namespace Acklann.Plaid.Institution
 			/// </summary>
 			/// <remarks>When available, the bank's logo is returned as a base64 encoded 152x152 PNG, the brand color is in hexadecimal format.</remarks>
 			[JsonProperty("include_optional_metadata")]
-			public bool InclueMetadata { get; set; }
+			public bool IncludeMetadata { get; set; }
 
 			/// <summary>
 			/// Gets or sets a value indicating whether to  include status information about the institution.

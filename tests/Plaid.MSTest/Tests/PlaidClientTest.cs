@@ -172,7 +172,7 @@ namespace Acklann.Plaid.Tests
 			request.CountryCodes = new string[] { "US" };
 			request.Options = new Institution.SearchByIdRequest.AdditionalOptions
 			{
-				InclueMetadata = true
+				IncludeMetadata = true
 			};
 
 			// Act

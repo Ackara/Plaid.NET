@@ -127,6 +127,13 @@ namespace Acklann.Plaid.Management
 			/// <value>The verification time of the client phone number.</value>
 			[JsonProperty("phone_number_verified_time")]
 			public string PhoneNumberVerifiedTime { get; set; }
+
+			/// <summary>
+			/// Gets or sets the client email address.
+			/// </summary>
+			/// <value>The client email address.</value>
+			[JsonProperty("email_address")]
+			public string EmailAddress { get; set; }
 		}
 	}
 }

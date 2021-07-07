@@ -14,11 +14,18 @@ namespace Acklann.Plaid.Entity
         [JsonProperty("client_user_id")]
         public string ClientUserId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the client phone number.
-        /// </summary>
-        /// <value>The client phone number.</value>
-        [JsonProperty("phone_number")]
+		/// <summary>
+		/// Gets or sets the client legal name.
+		/// </summary>
+		/// <value>The client legal name.</value>
+		[JsonProperty("legal_name")]
+		public string LegalName { get; set; }
+
+		/// <summary>
+		/// Gets or sets the client phone number.
+		/// </summary>
+		/// <value>The client phone number.</value>
+		[JsonProperty("phone_number")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

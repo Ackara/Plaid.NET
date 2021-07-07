@@ -108,6 +108,13 @@ namespace Acklann.Plaid.Management
 			public string ClientUserId { get; set; }
 
 			/// <summary>
+			/// Gets or sets the client legal name.
+			/// </summary>
+			/// <value>The client legal name.</value>
+			[JsonProperty("legal_name")]
+			public string LegalName { get; set; }
+
+			/// <summary>
 			/// Gets or sets the client phone number.
 			/// </summary>
 			/// <value>The client phone number.</value>

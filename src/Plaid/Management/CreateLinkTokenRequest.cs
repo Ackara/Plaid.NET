@@ -134,6 +134,13 @@ namespace Acklann.Plaid.Management
 			/// <value>The client email address.</value>
 			[JsonProperty("email_address")]
 			public string EmailAddress { get; set; }
+
+			/// <summary>
+			/// Gets or sets the verification time of the client email address.
+			/// </summary>
+			/// <value>The verification time of the client email address.</value>
+			[JsonProperty("email_address_verified_time")]
+			public string EmailAddressVerifiedTime { get; set; }
 		}
 	}
 }

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "cecrets.cli": {
+      "version": "1.0.2",
+      "commands": [
+        "app-secret"
+      ]
+    }
+  }
+}

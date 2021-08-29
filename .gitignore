@@ -6,6 +6,7 @@
 # User-specific files
 *.suo
 *.user
+*.user.*
 *.userosscache
 *.sln.docstates
 
@@ -305,13 +306,16 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-# Generated files
-package-*.json
-
-# Approval Tests
+# Generated Files
 *.received.*
+-lock*
+*.map
+*.css
+*.js
+
 
 # Sensitive Files
 [Ss]ecret*
 [Cc]redential*
 plaid.config
+[Aa]ppsettings.*

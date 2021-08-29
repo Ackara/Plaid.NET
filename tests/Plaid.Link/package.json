@@ -6,7 +6,7 @@
 		"knockout": "3.5.1"
 	},
 	"devDependencies": {
-		"@types/knockout": "3.4.68",
+		"@types/knockout": "3.4.69",
 		"@types/plaid-link": "2.0.6"
 	}
 }

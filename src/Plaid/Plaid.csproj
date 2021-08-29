@@ -3,14 +3,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Acklann.Plaid</AssemblyName>
     <RootNamespace>Acklann.Plaid</RootNamespace>
+    <AssemblyVersion>0.1.4</AssemblyVersion>
+    <PackageVersion>0.0.12</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
     <Title>Plaid.NET</Title>
-    <Version>0.0.12</Version>
+    <Version>0.1.4</Version>
     <PackageVersion>0.0.9</PackageVersion>
     <AssemblyVersion>0.0.12</AssemblyVersion>
-    <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
+    <AssemblyFileVersion>0.1.4</AssemblyFileVersion>
 
     <Authors>Ackara</Authors>
     <Company>Ackara</Company>
@@ -21,7 +23,7 @@
     <RepositoryUrl>https://github.com/Ackara/Plaid.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>A client api for plaid.com banking service.</Description>
-    <PackageIconUrl>https://github.com/Ackara/Plaid.NET/raw/master/art/icon.png</PackageIconUrl>
+    <PackageIconUrl>icon.png</PackageIconUrl>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
@@ -33,18 +35,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
 
   <ItemGroup Label="Package">
     <Content Include="..\..\license.txt">
       <Visible>false</Visible>
-      <PackagePath></PackagePath>
+      <PackagePath>license.txt</PackagePath>
     </Content>
-
     <Content Include="..\..\art\icon.png">
       <Visible>false</Visible>
-      <PackagePath></PackagePath>
+      <PackagePath>icon.png</PackagePath>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Serialization\" />
   </ItemGroup>
 </Project>

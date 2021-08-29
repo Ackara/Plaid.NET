@@ -9,5 +9,31 @@
 
 // ===== components ===== //
 
-
 // ===== pages ===== //
+
+html, body {
+	background-color: #0078d4;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 60'%3E%3Cg %3E%3Crect fill='%230078d4' width='11' height='11'/%3E%3Crect fill='%230379d4' x='10' width='11' height='11'/%3E%3Crect fill='%23057ad5' y='10' width='11' height='11'/%3E%3Crect fill='%23087bd5' x='20' width='11' height='11'/%3E%3Crect fill='%230b7bd5' x='10' y='10' width='11' height='11'/%3E%3Crect fill='%230e7cd6' y='20' width='11' height='11'/%3E%3Crect fill='%23107dd6' x='30' width='11' height='11'/%3E%3Crect fill='%23127ed6' x='20' y='10' width='11' height='11'/%3E%3Crect fill='%23147fd7' x='10' y='20' width='11' height='11'/%3E%3Crect fill='%231680d7' y='30' width='11' height='11'/%3E%3Crect fill='%231880d7' x='40' width='11' height='11'/%3E%3Crect fill='%231a81d8' x='30' y='10' width='11' height='11'/%3E%3Crect fill='%231c82d8' x='20' y='20' width='11' height='11'/%3E%3Crect fill='%231d83d8' x='10' y='30' width='11' height='11'/%3E%3Crect fill='%231f84d9' y='40' width='11' height='11'/%3E%3Crect fill='%232185d9' x='50' width='11' height='11'/%3E%3Crect fill='%232286d9' x='40' y='10' width='11' height='11'/%3E%3Crect fill='%232486da' x='30' y='20' width='11' height='11'/%3E%3Crect fill='%232587da' x='20' y='30' width='11' height='11'/%3E%3Crect fill='%232788da' x='10' y='40' width='11' height='11'/%3E%3Crect fill='%232889db' y='50' width='11' height='11'/%3E%3Crect fill='%232a8adb' x='60' width='11' height='11'/%3E%3Crect fill='%232b8bdb' x='50' y='10' width='11' height='11'/%3E%3Crect fill='%232d8bdc' x='40' y='20' width='11' height='11'/%3E%3Crect fill='%232e8cdc' x='30' y='30' width='11' height='11'/%3E%3Crect fill='%23308ddc' x='20' y='40' width='11' height='11'/%3E%3Crect fill='%23318edc' x='10' y='50' width='11' height='11'/%3E%3Crect fill='%23328fdd' x='70' width='11' height='11'/%3E%3Crect fill='%233490dd' x='60' y='10' width='11' height='11'/%3E%3Crect fill='%233590dd' x='50' y='20' width='11' height='11'/%3E%3Crect fill='%233691de' x='40' y='30' width='11' height='11'/%3E%3Crect fill='%233892de' x='30' y='40' width='11' height='11'/%3E%3Crect fill='%233993de' x='20' y='50' width='11' height='11'/%3E%3Crect fill='%233a94de' x='80' width='11' height='11'/%3E%3Crect fill='%233c95df' x='70' y='10' width='11' height='11'/%3E%3Crect fill='%233d95df' x='60' y='20' width='11' height='11'/%3E%3Crect fill='%233e96df' x='50' y='30' width='11' height='11'/%3E%3Crect fill='%234097df' x='40' y='40' width='11' height='11'/%3E%3Crect fill='%234198e0' x='30' y='50' width='11' height='11'/%3E%3Crect fill='%234299e0' x='90' width='11' height='11'/%3E%3Crect fill='%234499e0' x='80' y='10' width='11' height='11'/%3E%3Crect fill='%23459ae1' x='70' y='20' width='11' height='11'/%3E%3Crect fill='%23469be1' x='60' y='30' width='11' height='11'/%3E%3Crect fill='%23489ce1' x='50' y='40' width='11' height='11'/%3E%3Crect fill='%23499de1' x='40' y='50' width='11' height='11'/%3E%3Crect fill='%234a9ee2' x='90' y='10' width='11' height='11'/%3E%3Crect fill='%234b9ee2' x='80' y='20' width='11' height='11'/%3E%3Crect fill='%234d9fe2' x='70' y='30' width='11' height='11'/%3E%3Crect fill='%234ea0e2' x='60' y='40' width='11' height='11'/%3E%3Crect fill='%234fa1e3' x='50' y='50' width='11' height='11'/%3E%3Crect fill='%2351a2e3' x='90' y='20' width='11' height='11'/%3E%3Crect fill='%2352a2e3' x='80' y='30' width='11' height='11'/%3E%3Crect fill='%2353a3e3' x='70' y='40' width='11' height='11'/%3E%3Crect fill='%2354a4e4' x='60' y='50' width='11' height='11'/%3E%3Crect fill='%2356a5e4' x='90' y='30' width='11' height='11'/%3E%3Crect fill='%2357a6e4' x='80' y='40' width='11' height='11'/%3E%3Crect fill='%2358a7e4' x='70' y='50' width='11' height='11'/%3E%3Crect fill='%2359a7e5' x='90' y='40' width='11' height='11'/%3E%3Crect fill='%235ba8e5' x='80' y='50' width='11' height='11'/%3E%3Crect fill='%235ca9e5' x='90' y='50' width='11' height='11'/%3E%3C/g%3E%3C/svg%3E");
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+main section {
+	color: white;
+	margin-top: 10vh;
+}
+
+.token-value {
+	color: #000;
+	padding: 0.5em;
+}
+
+.token-wrapper {
+	@include depth-2();
+	border-radius: 5px;
+	background-color: lighten($background-color, 100);
+}
+
+.token-btn {
+	border: none;
+}

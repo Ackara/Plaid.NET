@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/server.d.ts" />
 
-namespace App {
+namespace PlaidLink {
 
 	export interface HttpHeader { name: string, value: string }
 	export interface ServerError<T> { status: number, url: string, data: T, message: string }

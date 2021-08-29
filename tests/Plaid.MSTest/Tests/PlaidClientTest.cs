@@ -11,13 +11,34 @@ namespace Acklann.Plaid.Tests
 		// ==================== Account ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_account_balances()
+		public void Can_get_accounts()
 		{
 			// Arrange
+			var request = new Accounts.GetAccountRequest();
+			request.UseDefaults();
+
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
+			var result = sut.FetchAccountAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.Item.ShouldNotBeNull();
+			result.Accounts.ShouldNotBeEmpty();
+		}
+
+		// ==================== Balance ==================== //
+
+		[TestMethod]
+		public void Can_get_account_balances()
+		{
+			// Arrange
 			var request = new Balance.GetBalanceRequest().UseDefaults();
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
 			var result = sut.FetchAccountBalanceAsync(request).Result;
 
 			// Assert
@@ -26,8 +47,10 @@ namespace Acklann.Plaid.Tests
 			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
 		}
 
+		// ==================== Auth ==================== //
+
 		[TestMethod]
-		public void Get_retrieve_bank_account_information()
+		public void Can_get_bank_account_information()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
@@ -65,37 +88,42 @@ namespace Acklann.Plaid.Tests
 		// ==================== Identity ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_personal_info_associated_with_an_account()
+		public void Can_get_account_holder_information()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Identity.GetUserIdentityRequest()
-			{
-			}.UseDefaults();
+			var request = new Identity.GetUserIdentityRequest().UseDefaults();
 
 			// Act
 			var result = sut.FetchUserIdentityAsync(request).Result;
-			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == Exceptions.ErrorCode.InvalidProduct;
 			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
 			// Assert
+			result.ShouldNotBeNull();
 			result.IsSuccessStatusCode.ShouldBeTrue();
 			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.Accounts.Length.ShouldBeGreaterThan(0);
 			result.Item.ShouldNotBeNull();
+			result.Accounts.Length.ShouldBeGreaterThan(0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.Names.Length > 0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.Addresses.Length > 0);
+			result.Accounts[0].Owners.ShouldAllBe(x => x.PhoneNumbers.Length > 0);
 		}
 
 		// ==================== Institution ==================== //
 
 		[TestMethod]
-		public void Can_paginate_institutions()
+		public void Can_get_all_institutions()
 		{
 			// Arrange
 			const int limit = 5;
+			var request = new Institution.SearchAllRequest() { Take = limit };
+			request.CountryCodes = new string[] { "US" };
+			request.UseDefaults();
+
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
-			var request = new Institution.SearchAllRequest() { Take = limit }.UseDefaults();
 			var response1 = sut.FetchAllInstitutionsAsync(request).Result;
 
 			request.Take = 1;
@@ -115,13 +143,16 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
-		public void Can_retrieve_institutions_by_name()
+		public void Can_get_institutions_by_name()
 		{
 			// Arrange
+			var request = new Institution.SearchRequest().UseDefaults();
+			request.Query = "citi";
+			request.CountryCodes = new string[] { "US" };
+
 			var sut = new PlaidClient(Environment.Sandbox);
 
 			// Act
-			var request = new Institution.SearchRequest() { Query = "citi" }.UseDefaults();
 			var result = sut.FetchInstitutionsAsync(request).Result;
 
 			// Assert
@@ -132,15 +163,16 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
-		public void Can_retrieve_institutions_by_id()
+		public void Can_get_institutions_by_id()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
 			var request = new Institution.SearchByIdRequest().UseDefaults();
 			request.InstitutionId = "ins_109511";
+			request.CountryCodes = new string[] { "US" };
 			request.Options = new Institution.SearchByIdRequest.AdditionalOptions
 			{
-				InclueMetadata = true
+				IncludeMetadata = true
 			};
 
 			// Act
@@ -154,6 +186,8 @@ namespace Acklann.Plaid.Tests
 		}
 
 		// ==================== Management ==================== //
+
+		// ==================== Token ==================== //
 
 		[TestMethod]
 		public void Can_create_link_token()
@@ -203,7 +237,7 @@ namespace Acklann.Plaid.Tests
 		// ==================== Transaction ==================== //
 
 		[TestMethod]
-		public void Can_retrieve_transactions()
+		public void Can_get_transactions()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
@@ -221,11 +255,30 @@ namespace Acklann.Plaid.Tests
 		}
 
 		[TestMethod]
+		public void Can_refresh_transactions()
+		{
+			// Arrange
+			var request = new Transactions.RefreshTransactionRequest();
+			request.UseDefaults();
+
+			// Act
+			var sut = new PlaidClient(Environment.Sandbox);
+			var result = sut.RefreshTransactionsAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+		}
+
+		// ==================== Item ==================== //
+
+		[TestMethod]
 		public void Can_retrieve_an_item()
 		{
 			// Arrange
 			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Management.GetItemRequest().UseDefaults();
+			var request = new Item.GetItemRequest().UseDefaults();
 
 			// Act
 			var result = sut.FetchItemAsync(request).Result;
@@ -239,6 +292,31 @@ namespace Acklann.Plaid.Tests
 			result.Item.AvailableProducts.Length.ShouldBeGreaterThan(0);
 		}
 
+		//[TestMethod]
+		public void Can_remove_an_item()
+		{
+			// Arrange
+			var request = new Item.RemoveItemRequest();
+			request.UseDefaults();
+
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var result = sut.DeleteItemAsync(request).Result;
+
+			// Assert
+			result.ShouldBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.RequestId.ShouldNotBeNullOrEmpty();
+		}
+
+		public void Can_update_webhook()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		// ==================== Income ==================== //
+
 		[TestMethod]
 		public void Can_retrieve_the_monthly_earnings_of_an_user()
 		{
@@ -250,7 +328,7 @@ namespace Acklann.Plaid.Tests
 
 			// Act
 			var result = sut.FetchUserIncomeAsync(request).Result;
-			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == "INVALID_PRODUCT";
+			bool publicKeyDontHaveAccess = result.Exception?.ErrorCode == Exceptions.ErrorCode.InvalidProduct;
 			if (publicKeyDontHaveAccess) Assert.Inconclusive(Helper.your_public_key_do_not_have_access_contact_plaid);
 
 			// Assert
@@ -258,6 +336,47 @@ namespace Acklann.Plaid.Tests
 			result.RequestId.ShouldNotBeNullOrEmpty();
 			result.Income.Streams.Length.ShouldBeGreaterThan(0);
 			result.Income.LastYearIncome.ShouldBeGreaterThan(0);
+		}
+
+		// ==================== Liabilities ==================== //
+
+		[TestMethod]
+		public void Can_retrieve_liabilities()
+		{
+			// Arrange
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var request = new Liabilities.GetLiabilitiesRequest().UseDefaults();
+			var result = sut.FetchLiabilitiesAsync(request).Result;
+
+			// Assert
+			result.RequestId.ShouldNotBeNullOrEmpty();
+			result.Accounts.Length.ShouldBeGreaterThanOrEqualTo(1);
+			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
+			result.Liabilities.Credit.ShouldNotBeNull();
+			result.Liabilities.Mortgage.ShouldNotBeNull();
+			result.Liabilities.Student.ShouldNotBeNull();
+		}
+
+		// ==================== Investments ==================== //
+
+		//[TestMethod]
+		public void Can_get_investment_holdings()
+		{
+			// Arrange
+			var request = new Investments.GetInvestmentHoldingsRequest();
+			request.UseDefaults();
+
+			var sut = new PlaidClient(Environment.Sandbox);
+
+			// Act
+			var result = sut.FetchInvestmentHoldingsAsync(request).Result;
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.IsSuccessStatusCode.ShouldBeTrue();
+			result.Holdings.ShouldNotBeNull();
 		}
 	}
 }

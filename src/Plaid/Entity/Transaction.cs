@@ -54,6 +54,12 @@ namespace Acklann.Plaid.Entity
         public string TransactionType { get; set; }
 
         /// <summary>
+        /// The channel used to make a payment. Possible values are: online, in store, other. This field will replace the transaction_type field
+        /// </summary>
+        [JsonProperty("payment_channel")]
+        public string PaymentChannel { get; set; }
+
+        /// <summary>
         /// Gets or sets the settled dollar value. Positive values when money moves out of the account; negative values when money moves in. For example, purchases are positive; credit card payments, direct deposits, refunds are negative.
         /// </summary>
         /// <value>The amount.</value>
@@ -87,6 +93,13 @@ namespace Acklann.Plaid.Entity
         /// <remarks>For pending transactions, Plaid returns the date the transaction occurred; for posted transactions, Plaid returns the date the transaction posts.</remarks>
         [JsonProperty("date")]
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date that the transaction was authorized.
+        /// </summary>
+        /// <value>The transaction authorized date. Optional</value>
+        [JsonProperty("authorized_date")]
+        public DateTime? AuthorizedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the information of the merchant's location. Typically <c>null</c>.
@@ -182,6 +195,13 @@ namespace Acklann.Plaid.Entity
             /// <value>The longitude.</value>
             [JsonProperty("lon")]
             public double? Longitude { get; set; }
+
+            /// <summary>
+            /// Gets or sets the alpha-2 country code where the transaction occurred.
+            /// </summary>
+            /// <value>Country code</value>
+            [JsonProperty("country")]
+            public string Country { get; set; }
 
             /// <summary>
             /// Gets or sets the store number.

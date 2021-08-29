@@ -6,26 +6,38 @@
 	<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 }
 <main class="column center tension-box p100">
-	<header>
+	<section class="column center">
+		<h1 class="text center">
+			<span class="alt-header">Plaid</span>
+			<br />
+			<span class="alt-sub-header bold">Access Token</span>
+		</h1>
 
-		<h1>Open Plaid Link Sample</h1>
+		<div class="token column middle mt50">
+			<div class="token-wrapper row middle">
+				<span class="token-value mr100" data-bind="text: accessToken"></span>
+				<button class="token-btn icon-btn p25"
+						title="copy"
+						data-bind="click: onCopyToClipboardButtonClicked">
+					<svg><use xlink:href="#copy-svg" /></svg>
+				</button>
 
-		<button id="link-button" class="accent-btn p100">
-			<span>Open Plaid Link</span>
-		</button>
-
-		<div class="row middle mt50">
-			<span>Access Token: </span>
-			<span data-bind="text: accessToken"></span>
+				<button class="token-btn icon-btn p25"
+						title="refresh"
+						data-bind="click: onRefreshButtonClicked">
+					<svg><use xlink:href="#refresh-svg" /></svg>
+				</button>
+			</div>
 		</div>
-	</header>
+	</section>
 </main>
 
 @section scripts{
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 	<script type="text/javascript">
-		var vm = new App.IndexPage({
-			token: "@(Model.LinkToken)"
+		var vm = new PlaidLink.IndexPage({
+			token: "@(Model.LinkToken)",
+			accessToken: "@(Model.AccessToken)"
 		});
 		ko.applyBindings(vm);
 	</script>

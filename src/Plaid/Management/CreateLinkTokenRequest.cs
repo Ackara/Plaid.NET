@@ -18,14 +18,14 @@ namespace Acklann.Plaid.Management
 		}
 
 		/// <summary>
-		/// Gets or sets the client name.
+		/// The name of your application, as it should be displayed in Link. Maximum length of 30 characters.
 		/// </summary>
 		/// <value>The client name.</value>
 		[JsonProperty("client_name")]
 		public string ClientName { get; set; }
 
 		/// <summary>
-		/// Gets or sets the language.
+		/// The language that Link should be displayed in.
 		/// </summary>
 		/// <value>The language.</value>
 		[JsonProperty("language")]
@@ -39,49 +39,50 @@ namespace Acklann.Plaid.Management
 		public string[] CountryCodes { get; set; }
 
 		/// <summary>
-		/// Gets or sets the user.
+		/// An object specifying information about the end user who will be linking their account.
 		/// </summary>
 		/// <value>The user.</value>
 		[JsonProperty("user")]
 		public UserInfo User { get; set; }
 
 		/// <summary>
-		/// Gets or sets the products.
+		/// List of Plaid product(s) you wish to use.
 		/// </summary>
 		/// <value>The products.</value>
 		[JsonProperty("products")]
 		public string[] Products { get; set; }
 
 		/// <summary>
-		/// Gets or sets the webhook.
+		/// The destination URL to which any webhooks should be sent.
 		/// </summary>
 		/// <value>The webhook.</value>
 		[JsonProperty("webhook")]
 		public string Webhook { get; set; }
 
 		/// <summary>
-		/// Gets or sets the link customization name.
+		/// The name of the Link customization from the Plaid Dashboard to be applied to Link.
+		/// If not specified, the default customization will be used.
 		/// </summary>
 		/// <value>The link customization name.</value>
 		[JsonProperty("link_customization_name")]
 		public string LinkCustomizationName { get; set; }
 
 		/// <summary>
-		/// Gets or sets the account filters.
+		/// By default, Link will provide limited account filtering: it will only display Institutions that are compatible with all products supplied in the products parameter of /link/token/create, and, if auth is specified in the products array, will also filter out accounts other than checking and savings accounts on the Account Select pane.
+		/// You can further limit the accounts shown in Link by using account_filters to specify the account subtypes to be shown in Link.
 		/// </summary>
-		/// <value>The account filters.</value>
 		[JsonProperty("account_filters")]
 		public Dictionary<string, List<string>> AccountFilters { get; set; }
 
 		/// <summary>
-		/// Gets or sets the access_token.
+		/// The access_token associated with the Item to update, used when updating or modifying an existing access_token.
 		/// </summary>
 		/// <value>The access token.</value>
 		[JsonProperty("access_token")]
 		public string AccessToken { get; set; }
 
 		/// <summary>
-		/// Gets or sets the redirect uri.
+		/// A URI indicating the destination where a user should be forwarded after completing the Link flow; used to support OAuth authentication flows when launching Link in the browser or via a webview.
 		/// </summary>
 		/// <value>The redirect uri.</value>
 		[JsonProperty("redirect_uri")]
@@ -94,6 +95,12 @@ namespace Acklann.Plaid.Management
 		/// <remarks>Payment initiation still needs to be typed and fully implemented.</remarks>
 		[JsonProperty("payment_initiation")]
 		public object PaymentInitiation { get; set; }
+
+		/// <summary>
+		/// The name of your app's Android package. Required if using the link_token to initialize Link on Android.
+		/// </summary>
+		[JsonProperty("android_package_name")]
+		public string AndriodPackageName { get; set; }
 
 		/// <summary>
 		/// Represents an <see cref="Entity.User"/> metadata.

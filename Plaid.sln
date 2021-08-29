@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".misc", ".misc", "{5B75FA3C
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D79CDC6A-E826-4BF5-AB5B-E8A842658BD3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.MSTest", "tests\Plaid.MSTest\Plaid.MSTest.csproj", "{6099B593-99AD-44E2-99F1-F4E875268412}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plaid.Link", "tests\Plaid.Link\Plaid.Link.csproj", "{ADD945BF-5485-4462-9BD4-D6328DCBD7F9}"
@@ -23,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E24A7381
 	ProjectSection(SolutionItems) = preProject
 		build.ps1 = build.ps1
 		build\manifest.json = build\manifest.json
+		secrets-template.csv = secrets-template.csv
+		secrets.json = secrets.json
 		build\tasks.psake.ps1 = build\tasks.psake.ps1
 	EndProjectSection
 EndProject

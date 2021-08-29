@@ -29,17 +29,6 @@ namespace Acklann.Plaid
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="PlaidClient"/> class.
-		/// </summary>
-		/// <param name="options">The options.</param>
-		/// <param name="factory">The factory.</param>
-		/// <param name="logger">The logger.</param>
-		public PlaidClient(PlaidOption options, IHttpClientFactory factory, ILogger logger) :
-			this(options?.ClientId, options?.Secrets, options?.AccessToken, options.EnvironmentName, options?.Version, factory, logger)
-		{
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="PlaidClient" /> class.
 		/// </summary>
 		/// <param name="clientId">The client identifier.</param>
@@ -78,6 +67,62 @@ namespace Acklann.Plaid
 			};
 
 			_baseUrl = $"https://{subDomain}.plaid.com";
+		}
+
+		/* Link */
+
+		// TODO: /link/token/get
+		// TODO: /item/access_token/invalidate
+
+		/// <summary>
+		/// The /link/token/create endpoint creates a link_token, which is required as a parameter when initializing Link.
+		/// Once Link has been initialized, it returns a public_token, which can then be exchanged for an access_token via /item/public_token/exchange as part of the main Link flow.
+		/// </summary>
+		/// <param name="request">The request body</param>
+		public Task<Management.CreateLinkTokenResponse> CreateLinkToken(Management.CreateLinkTokenRequest request)
+		{
+			return PostAsync<Management.CreateLinkTokenResponse>("/link/token/create", request);
+		}
+
+		/// <summary>
+		/// <summary>
+		/// Exchanges a Link public_token for an API access_token.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
+		public Task<Management.CreatePublicTokenResponse> CreatePublicTokenAsync(Management.CreatePublicTokenRequest request)
+		{
+			return PostAsync<Management.CreatePublicTokenResponse>("/item/public_token/create", request);
+		}
+
+		/// <summary>
+		/// Exchanges a Link public_token for an API access_token.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
+		public Task<Management.ExchangeTokenResponse> ExchangeTokenAsync(Management.ExchangeTokenRequest request)
+		{
+			return PostAsync<Management.ExchangeTokenResponse>("/item/public_token/exchange", request);
+		}
+
+		/// <summary>
+		/// Rotates the access_token associated with an <see cref="Entity.Item"/>. The endpoint returns a new access_token and immediately invalidates the previous access_token.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns>Task&lt;Management.RotateAccessTokenResponse&gt;.</returns>
+		public Task<Management.RotateAccessTokenResponse> RotateAccessTokenAsync(Management.RotateAccessTokenRequest request)
+		{
+			return PostAsync<Management.RotateAccessTokenResponse>("/item/access_token/invalidate", request);
+		}
+
+		/// <summary>
+		/// Updates an access_token from the legacy version of Plaid’s API, you can use method to generate an access_token for the Item that works with the current API.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns>Task&lt;Management.UpdateAccessTokenVersionResponse&gt;.</returns>
+		public Task<Management.UpdateAccessTokenVersionResponse> UpdateAccessTokenVersion(Management.UpdateAccessTokenVersionRequest request)
+		{
+			return PostAsync<Management.UpdateAccessTokenVersionResponse>("/item/access_token/update_version", request);
 		}
 
 		/* Transactions */
@@ -130,61 +175,6 @@ namespace Acklann.Plaid
 		public Task<Item.UpdateWebhookResponse> UpdateWebhookAsync(Item.UpdateWebhookRequest request)
 		{
 			return PostAsync<Item.UpdateWebhookResponse>("/item/webhook/update", request);
-		}
-
-		/* Token */
-
-		// TODO: /link/token/get
-		// TODO: /item/access_token/invalidate
-
-		/// <summary>
-		/// Exchanges a Link public_token for an API access_token.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
-		public Task<Management.CreatePublicTokenResponse> CreatePublicTokenAsync(Management.CreatePublicTokenRequest request)
-		{
-			return PostAsync<Management.CreatePublicTokenResponse>("/item/public_token/create", request);
-		}
-
-		/// <summary>
-		/// Creates a Link link_token.
-		/// </summary>
-		/// <param name="request"></param>
-		/// <returns></returns>
-		public Task<Management.CreateLinkTokenResponse> CreateLinkToken(Management.CreateLinkTokenRequest request)
-		{
-			return PostAsync<Management.CreateLinkTokenResponse>("/link/token/create", request);
-		}
-
-		/// <summary>
-		/// Exchanges a Link public_token for an API access_token.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Management.ExchangeTokenResponse&gt;.</returns>
-		public Task<Management.ExchangeTokenResponse> ExchangeTokenAsync(Management.ExchangeTokenRequest request)
-		{
-			return PostAsync<Management.ExchangeTokenResponse>("/item/public_token/exchange", request);
-		}
-
-		/// <summary>
-		/// Rotates the access_token associated with an <see cref="Entity.Item"/>. The endpoint returns a new access_token and immediately invalidates the previous access_token.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Management.RotateAccessTokenResponse&gt;.</returns>
-		public Task<Management.RotateAccessTokenResponse> RotateAccessTokenAsync(Management.RotateAccessTokenRequest request)
-		{
-			return PostAsync<Management.RotateAccessTokenResponse>("/item/access_token/invalidate", request);
-		}
-
-		/// <summary>
-		/// Updates an access_token from the legacy version of Plaid’s API, you can use method to generate an access_token for the Item that works with the current API.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Management.UpdateAccessTokenVersionResponse&gt;.</returns>
-		public Task<Management.UpdateAccessTokenVersionResponse> UpdateAccessTokenVersion(Management.UpdateAccessTokenVersionRequest request)
-		{
-			return PostAsync<Management.UpdateAccessTokenVersionResponse>("/item/access_token/update_version", request);
 		}
 
 		/* Institutions */

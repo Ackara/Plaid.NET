@@ -13,6 +13,7 @@ Properties {
 	$InProduction = $false;
 	$Configuration = "Debug";
 	$EnvironmentName = $null;
+	$SqlDialect = "SQLServer";
 
 	# Files & Folders
 	$MSBuildExe = "";
@@ -22,11 +23,12 @@ Properties {
 	$SolutionName =   (Split-Path $SolutionFolder -Leaf);
 	$ArtifactsFolder = (Join-Path $SolutionFolder "artifacts");
 	$ManifestFilePath = (Join-Path $PSScriptRoot  "manifest.json");
+	$MigrationFolder = (Join-Path $SolutionFolder "src/*.Migration/tsql" | Resolve-Path)
 }
 
 Task "Default" -depends @("compile", "test", "pack");
 
-Task "Publish" -depends @("clean", "version", "compile", "test", "pack", "push-nuget", "tag") `
+Task "Publish" -depends @("clean", "version", "compile", "test", "pack", "push-nuget") `
 -description "This task compiles, test then publish all packages to their respective destination.";
 
 # ======================================================================
@@ -51,12 +53,34 @@ Task "Restore-Dependencies" -alias "restore" -description "This task generate an
 		Write-Host "  * added 'build/$(Split-Path $ManifestFilePath -Leaf)' to the solution.";
 	}
 
-	# Generating a secrets file template
+	# Restore dotnet tools
+	# ==================================================
+	Push-Location $SolutionFolder;
+	Exec { &dotnet tool restore; }
+	Pop-Location;
+
+	# Generating a secrets file
 	# ==================================================
 	if (-not (Test-Path $SecretsFilePath))
 	{
 		"{}" | Out-File $SecretsFilePath -Encoding utf8;
 		Write-Host "  * added '$(Split-Path $SecretsFilePath -Leaf)' to the solution.";
+	}
+
+	$templateFilePath = Join-Path $SolutionFolder "secrets-template.csv";
+	$valuePairs = Get-Content $templateFilePath | ConvertFrom-Csv;
+	foreach ($item in $valuePairs)
+	{
+		$key = (&{ if (([string]$item.Key).StartsWith('$')) { return ($EnvironmentName + $item.Key.Substring(1)); } else { return $item.Key; } });
+		$currentValue = &dotnet app-secret get --path $SecretsFilePath --key $key;
+		if ([string]::IsNullOrWhiteSpace($currentValue) -and $Interactive)
+		{
+			$currentValue = Read-Host (Get-Alt $item.Description $key);
+		}
+
+		$value = Get-Alt $currentValue $item.Default;
+		if ([string]::IsNullOrWhiteSpace($value)) { continue; }
+		&dotnet app-secret set --path $SecretsFilePath --key $key --value $value;
 	}
 }
 
@@ -137,7 +161,7 @@ Task "Build-Solution" -alias "compile" -description "This task compiles projects
 -action {
 	$solutionFile = Join-Path $SolutionFolder "*.sln" | Get-Item;
 	Write-Separator "msbuild '$($solutionFile.Name)'";
-	Exec { &$MSBuildExe $solutionFile.FullName -property:Configuration=$Configuration -restore ; }
+	Exec { &dotnet build $solutionFile.FullName --configuration $Configuration; }
 }
 
 Task "Run-Tests" -alias "test" -description "This task invoke all tests within the 'tests' folder." `
@@ -214,6 +238,10 @@ function Get-Secret
 		}
 	}
 	return $result;
+}
+
+function Get-Alt([string]$value, [string]$default = ""){
+	if ([string]::IsNullOrWhiteSpace($value)) { return $default; } else { return $value; }
 }
 
 #endregion

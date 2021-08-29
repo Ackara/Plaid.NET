@@ -54,4 +54,8 @@
       <PackagePath>icon.png</PackagePath>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Serialization\" />
+  </ItemGroup>
 </Project>

@@ -7,11 +7,12 @@ namespace Acklann.Plaid
 {
 	public class Client
 	{
-		public Client(string baseUrl, string clientId, string secret, IHttpClientFactory factory)
+		public Client(string baseUrl, string clientId, string secret, string version, IHttpClientFactory factory)
 		{
 			_secret = secret ?? throw new ArgumentNullException(nameof(secret));
 			_baseUrl = baseUrl ?? throw new ArgumentNullException(nameof(baseUrl));
 			_client_id = clientId ?? throw new ArgumentNullException(nameof(clientId));
+			_version = version ?? throw new ArgumentNullException(nameof(version));
 			_factory = factory ?? CreateDefaultFactory() ?? throw new ArgumentNullException(nameof(factory));
 		}
 
@@ -21,15 +22,56 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		/// <param name="sandbox">if set to <c>true</c> allows you to create a public_token without using Link.</param>
 		/// <returns></returns>
-		public Task<Response<Link.CreateLinkTokenResponse>> CreateLinkToken(Link.CreateLinkTokenRequest request, bool sandbox = false)
+		public Task<Response<Token.CreateLinkTokenResponse>> CreateLinkToken(Token.CreateLinkTokenRequest request, bool sandbox = false)
 		{
 			string path = sandbox ? "/sandbox/public_token/create" : "/link/token/create";
-			return SendRequestAsync<Link.CreateLinkTokenRequest, Link.CreateLinkTokenResponse>(path, request);
+			return SendRequestAsync<Token.CreateLinkTokenRequest, Token.CreateLinkTokenResponse>(path, request);
 		}
 
-		public Task<Response<Item.ExchangePublicTokenResponse>> ExchangeTokenForAccessTokenAsync(Item.ExchangePublicTokenRequest request)
+		/// <summary>
+		/// Use the /sandbox/public_token/create endpoint to create a valid public_token for an arbitrary institution ID, initial products, and test credentials.
+		/// The created public_token maps to a new Sandbox Item. You can then call <see cref="ExchangeTokenForAccessTokenAsync(Item.ExchangePublicTokenRequest)"/> to exchange the public_token for an access_token and perform all API actions.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Sandbox.CreatePublicTokenResponse>> CreateSandboxPublicToken(Sandbox.CreatePublicTokenRequest request)
 		{
-			return SendRequestAsync<Item.ExchangePublicTokenRequest, Item.ExchangePublicTokenResponse>("/item/public_token/exchange", request);
+			return SendRequestAsync<Sandbox.CreatePublicTokenRequest, Sandbox.CreatePublicTokenResponse>("/sandbox/public_token/create", request);
+		}
+
+		/// <summary>
+		/// The /item/public_token/exchange endpoint to exchange a Link public_token for an API access_token. Link hands off the public_token client-side via the onSuccess callback once a user has successfully created an Item. The public_token is ephemeral and expires after 30 minutes.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Token.ExchangePublicTokenResponse>> ExchangeTokenForAccessTokenAsync(Token.ExchangePublicTokenRequest request)
+		{
+			return SendRequestAsync<Token.ExchangePublicTokenRequest, Token.ExchangePublicTokenResponse>("/item/public_token/exchange", request);
+		}
+
+		/// <summary>
+		/// The /institutions/get endpoint; returns all financial institutions currently supported by Plaid.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Institution.GetAllInstitutionsResponse>> GetAllInstituionsAsync(Institution.GetAllInstitutionsRequest request)
+		{
+			return SendRequestAsync<Institution.GetAllInstitutionsRequest, Institution.GetAllInstitutionsResponse>("/institutions/get", request);
+		}
+
+		/// <summary>
+		/// The /institutions/get_by_id endpoint; return details on a specified financial institution currently supported by Plaid.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Institution.GetInstitutionByIdResponse>> GetInstitutionByIdAsync(Institution.GetInstitutionByIdRequest request)
+		{
+			return SendRequestAsync<Institution.GetInstitutionByIdRequest, Institution.GetInstitutionByIdResponse>("/institutions/get_by_id", request);
+		}
+
+		/// <summary>
+		/// The /item/get endpoint; returns information about the status of an <see cref="Entity.Item"/>.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Item.GetItemResponse>> GetItemAsync(Item.GetItemRequest request)
+		{
+			return SendRequestAsync<Item.GetItemRequest, Item.GetItemResponse>("/item/get", request);
 		}
 
 		internal async Task<Response<TResponse>> SendRequestAsync<TRequest, TResponse>(string path, TRequest model) where TRequest : RequestBase2
@@ -43,6 +85,7 @@ namespace Acklann.Plaid
 			string body = System.Text.Json.JsonSerializer.Serialize(model, typeof(TRequest), _serializerOptions);
 
 			var request = new HttpRequestMessage(HttpMethod.Post, url);
+			request.Headers.Add("Plaid-Version", _version);
 			request.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json"); ;
 #if DEBUG
 			WriteToDebugger(request, body);
@@ -72,7 +115,7 @@ namespace Acklann.Plaid
 		#region Backing Members
 
 		private readonly IHttpClientFactory _factory;
-		private readonly string _client_id, _secret, _baseUrl;
+		private readonly string _client_id, _secret, _baseUrl, _version;
 		private readonly System.Text.Json.JsonSerializerOptions _serializerOptions = GetSerializerOptions();
 
 		private string GetEndpoint(string path) => string.Concat(_baseUrl, path);

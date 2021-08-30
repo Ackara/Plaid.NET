@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
-namespace Acklann.Plaid.Link.Pages
+namespace Acklann.Plaid.Token.Pages
 {
 	public class IndexPageModel : PageModel
 	{

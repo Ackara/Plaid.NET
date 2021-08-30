@@ -74,7 +74,6 @@ namespace Acklann.Plaid
 		// TODO: /link/token/get
 		// TODO: /item/access_token/invalidate
 
-		
 		/// <summary>
 		/// <summary>
 		/// Exchanges a Link public_token for an API access_token.
@@ -139,16 +138,6 @@ namespace Acklann.Plaid
 		/* Item Management */
 
 		/// <summary>
-		/// Retrieves information about the status of an <see cref="Entity.Item"/>. Endpoint '/item/get'.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Management.GetItemResponse&gt;.</returns>
-		public Task<Item.GetItemResponse> FetchItemAsync(Item.GetItemRequest request)
-		{
-			return PostAsync<Item.GetItemResponse>("/item/get", request);
-		}
-
-		/// <summary>
 		/// Delete an <see cref="Entity.Item"/>. Once deleted, the access_token associated with the <see cref="Entity.Item"/> is no longer valid and cannot be used to access any data that was associated with the <see cref="Entity.Item"/>.
 		/// </summary>
 		/// <param name="request">The request.</param>
@@ -166,38 +155,6 @@ namespace Acklann.Plaid
 		public Task<Item.UpdateWebhookResponse> UpdateWebhookAsync(Item.UpdateWebhookRequest request)
 		{
 			return PostAsync<Item.UpdateWebhookResponse>("/item/webhook/update", request);
-		}
-
-		/* Institutions */
-
-		/// <summary>
-		/// Retrieves the details on all financial institutions currently supported by Plaid.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Institution.SearchResponse&gt;.</returns>
-		public Task<Institution.SearchResponse> FetchAllInstitutionsAsync(Institution.SearchAllRequest request)
-		{
-			return PostAsync<Institution.SearchResponse>("/institutions/get", request);
-		}
-
-		/// <summary>
-		/// Retrieves the institutions that match the query parameters.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Institution.SearchResponse&gt;.</returns>
-		public Task<Institution.SearchResponse> FetchInstitutionsAsync(Institution.SearchRequest request)
-		{
-			return PostAsync<Institution.SearchResponse>("/institutions/search", request);
-		}
-
-		/// <summary>
-		/// Retrieves the institutions that match the id.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Institution.SearchByIdResponse&gt;.</returns>
-		public Task<Institution.SearchByIdResponse> FetchInstitutionByIdAsync(Institution.SearchByIdRequest request)
-		{
-			return PostAsync<Institution.SearchByIdResponse>("/institutions/get_by_id", request);
 		}
 
 		/* Income */

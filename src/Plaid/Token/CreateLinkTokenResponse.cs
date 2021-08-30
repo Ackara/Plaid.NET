@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Acklann.Plaid.Link
+namespace Acklann.Plaid.Token
 {
 	public class CreateLinkTokenResponse : PlaidResponseBase
 	{

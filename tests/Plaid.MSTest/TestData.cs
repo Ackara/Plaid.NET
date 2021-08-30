@@ -30,6 +30,24 @@ namespace Acklann.Plaid
 			return System.IO.Directory.EnumerateFiles(Directory, pattern, SearchOption.AllDirectories);
 		}
 
+		public static string CreateAccessToken()
+			=> CreateAccessToken("ins_129571", "assets", "auth", "balance", "transactions", "identity");
+
+		public static string CreateAccessToken(string institutionId, params string[] products)
+		{
+			var client = CreateClient();
+			var response = client.CreateSandboxPublicToken(new Sandbox.CreatePublicTokenRequest(institutionId, products)).Result;
+			if (response.Succeeded == false) Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail(response.Message);
+
+			var exchange = client.ExchangeTokenForAccessTokenAsync(new Token.ExchangePublicTokenRequest(response.Data.PublicToken)).Result;
+			return exchange.Data.AsscessToken;
+		}
+
+		public static Client CreateClient()
+		{
+			return new Client("https://sandbox.plaid.com", GetClientId(), GetSecret(), "2020-09-14", default);
+		}
+
 		public static string GetClientId() => GetValue("plaid:client_id");
 
 		public static string GetSecret() => GetValue("plaid:secret");

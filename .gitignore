@@ -313,9 +313,6 @@ OpenCover/
 *.css
 *.js
 
-
 # Sensitive Files
-[Ss]ecret*
-[Cc]redential*
-plaid.config
+[Ss]ecret.json
 [Aa]ppsettings.*

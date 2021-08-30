@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 /// todo: add account filter
-namespace Acklann.Plaid.Link
+namespace Acklann.Plaid.Token
 {
 	/// <summary>
 	/// Represents a request for plaid's '/link/token/create' endpoint. Create a link_token.
@@ -42,9 +42,17 @@ namespace Acklann.Plaid.Link
 		public string Language { get; set; }
 
 		/// <summary>
-		/// Gets or sets the country codes.
+		/// Specify an array of Plaid-supported country codes this institution supports, using the ISO-3166-1 alpha-2 country code standard.
+		/// Possible Values:
+		/// <list type="bullet">
+		/// <item>US</item>
+		/// <item>GB</item>
+		/// <item>ES</item>
+		/// <item>NL</item>
+		/// <item>IE</item>
+		/// <item>CA</item>
+		/// </list>
 		/// </summary>
-		/// <value>The country codes.</value>
 		[JsonPropertyName("country_codes")]
 		public string[] CountryCodes { get; set; }
 

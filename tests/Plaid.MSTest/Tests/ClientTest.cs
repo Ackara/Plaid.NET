@@ -8,43 +8,6 @@ namespace Acklann.Plaid.Tests
 	{
 		// ==================== Account ==================== //
 
-		[TestMethod]
-		public void Can_get_accounts()
-		{
-			// Arrange
-			var request = new Accounts.GetAccountRequest();
-			request.UseDefaults();
-
-			var sut = new PlaidClient(Environment.Sandbox);
-
-			// Act
-			var result = sut.FetchAccountAsync(request).Result;
-
-			// Assert
-			result.ShouldNotBeNull();
-			result.IsSuccessStatusCode.ShouldBeTrue();
-			result.Item.ShouldNotBeNull();
-			result.Accounts.ShouldNotBeEmpty();
-		}
-
-		// ==================== Balance ==================== //
-
-		[TestMethod]
-		public void Can_get_account_balances()
-		{
-			// Arrange
-			var request = new Balance.GetBalanceRequest().UseDefaults();
-			var sut = new PlaidClient(Environment.Sandbox);
-
-			// Act
-			var result = sut.FetchAccountBalanceAsync(request).Result;
-
-			// Assert
-			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.Accounts.Length.ShouldBeGreaterThanOrEqualTo(1);
-			result.Accounts[0].Balance.Current.ShouldBeGreaterThanOrEqualTo(1);
-		}
-
 		// ==================== Auth ==================== //
 
 		[TestMethod]

@@ -1,28 +1,52 @@
-﻿namespace Acklann.Plaid.Balance
+﻿using System;
+using System.Text.Json.Serialization;
+/*
+ * todo: date
+ */
+namespace Acklann.Plaid.Balance
 {
 	/// <summary>
-	/// Represents a request for plaid's '/accounts/balance/get' endpoint. The POST /accounts/balance/get endpoint returns the real-time balance for each of an Item’s accounts. It can be used for existing Items that were added via any of Plaid’s other products.
+	/// Request to get  the real-time balance for each of an Item's accounts.
 	/// </summary>
-	/// <remarks>Note that not all institutions calculate the available balance. In the event that available balance is unavailable from the institution, Plaid will return an available balance value of <c>null</c>.</remarks>
-	/// <seealso cref="Acklann.Plaid.AuthorizedRequestBase" />
-	public class GetBalanceRequest : AuthorizedRequestBase
+	public class GetBalanceRequest : RequestWithAccessToken
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GetBalanceRequest"/> class.
+		/// </summary>
+		public GetBalanceRequest()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GetBalanceRequest"/> class.
+		/// </summary>
+		/// <param name="accessToken">The access token.</param>
+		/// <exception cref="System.ArgumentNullException">accessToken</exception>
+		public GetBalanceRequest(string accessToken)
+		{
+			AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
+		}
+
 		/// <summary>
 		/// Gets or sets the options.
 		/// </summary>
 		/// <value>The options.</value>
-		public Settings Options { get; set; }
+		[JsonPropertyName("options")]
+		public MoreOptions Options { get; set; }
 
-		/// <summary>
-		/// <see cref="GetBalanceRequest"/> Settings.
-		/// </summary>
-		public class Settings
+		public class MoreOptions
 		{
 			/// <summary>
-			/// Gets or sets the account ids. Note: An error will be returned if a provided account_id is not associated with the <see cref="Entity.Item"/>.
+			/// A list of account_ids to retrieve for the Item. The default value is null.
 			/// </summary>
-			/// <value>The account ids.</value>
+			[JsonPropertyName("account_ids")]
 			public string[] AccountIds { get; set; }
+
+			/// <summary>
+			/// Timestamp in ISO-8601 format (YYYY-MM-DDTHH:mm:ssZ) indicating the oldest acceptable balance when making a request to /accounts/balance/get.
+			/// </summary>
+			[JsonPropertyName("min_last_updated_datetime")]
+			public string MinLastUpdatedDateTime { get; set; }
 		}
 	}
 }

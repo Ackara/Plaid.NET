@@ -179,28 +179,7 @@ namespace Acklann.Plaid
 			return PostAsync<Auth.GetAccountInfoResponse>("/auth/get", request);
 		}
 
-		/* Balance */
-
-		/// <summary>
-		/// Retrieve high-level information about all accounts associated with an <see cref="Entity.Item"/>.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Balance.GetAccountResponse&gt;.</returns>
-		public Task<Accounts.GetAccountResponse> FetchAccountAsync(Accounts.GetAccountRequest request)
-		{
-			return PostAsync<Accounts.GetAccountResponse>("/accounts/get", request);
-		}
-
-		/// <summary>
-		///  Retrieves the real-time balance for each of an <see cref="Entity.Item"/>’s accounts.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Task&lt;Balance.GetBalanceResponse&gt;.</returns>
-		public Task<Balance.GetBalanceResponse> FetchAccountBalanceAsync(Balance.GetBalanceRequest request)
-		{
-			return PostAsync<Balance.GetBalanceResponse>("/accounts/balance/get", request);
-		}
-
+		
 		/* Categories */
 
 		/// <summary>

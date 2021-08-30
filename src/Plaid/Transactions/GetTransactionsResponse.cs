@@ -11,27 +11,30 @@ namespace Acklann.Plaid.Transactions
 	public class GetTransactionsResponse : PlaidResponseBase
 	{
 		/// <summary>
-		/// Gets or sets the number of transactions returned.
+		/// An array containing the accounts associated with the Item for which transactions are being returned.
+		/// Each transaction can be mapped to its corresponding account via the account_id field.
 		/// </summary>
-		[JsonPropertyName("total_transactions")]
-		public int TransactionsReturned { get; set; }
+		[JsonPropertyName("accounts")]
+		public Account[] Accounts { get; set; }
 
 		/// <summary>
-		/// Gets or sets the transactions.
+		/// An array containing transactions from the account. Transactions are returned in reverse chronological order, with the most recent at the beginning of the array.
+		/// The maximum number of transactions returned is determined by the count parameter.
 		/// </summary>
 		[JsonPropertyName("transactions")]
 		public Transaction[] Transactions { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item.
+		/// The total number of transactions available within the date range specified.
+		/// If total_transactions is larger than the size of the transactions array, more transactions are available and can be fetched via manipulating the offset parameter.
+		/// </summary>
+		[JsonPropertyName("total_transactions")]
+		public int TotalTransactions { get; set; }
+
+		/// <summary>
+		/// Metadata about the Item.
 		/// </summary>
 		[JsonPropertyName("item")]
 		public Entity.Item Item { get; set; }
-
-		/// <summary>
-		/// Gets or sets the accounts.
-		/// </summary>
-		[JsonPropertyName("accounts")]
-		public Account[] Accounts { get; set; }
 	}
 }

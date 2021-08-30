@@ -7,7 +7,12 @@ namespace Acklann.Plaid
 {
 	public class Client
 	{
-		public Client(string baseUrl, string clientId, string secret, string version, IHttpClientFactory factory)
+		public Client(Environment environment, string clientId, string secret)
+			: this(GetBaseUrl(environment), clientId, secret, VERSION, default)
+		{
+		}
+
+		public Client(string baseUrl, string clientId, string secret, string version = VERSION, IHttpClientFactory factory = default)
 		{
 			_secret = secret ?? throw new ArgumentNullException(nameof(secret));
 			_baseUrl = baseUrl ?? throw new ArgumentNullException(nameof(baseUrl));
@@ -83,18 +88,57 @@ namespace Acklann.Plaid
 			return PostRequest<Transactions.GetTransactionsRequest, Transactions.GetTransactionsResponse>("/transactions/get", request);
 		}
 
+		/// <summary>
+		/// The /transactions/refresh endpoint; It initiates an on-demand extraction to fetch the newest transactions for an Item. This on-demand extraction takes place in addition to the periodic extractions that automatically occur multiple times a day for any Transactions-enabled Item. If changes to transactions are discovered after calling /transactions/refresh, Plaid will fire a webhook: TRANSACTIONS_REMOVED will be fired if any removed transactions are detected, and DEFAULT_UPDATE will be fired if any new transactions are detected. New transactions can be fetched by calling /transactions/get.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Transactions.RefreshTransactionResponse>> RefreshTransactionData(Transactions.RefreshTransactionRequest request)
+		{
+			return PostRequest<Transactions.RefreshTransactionRequest, Transactions.RefreshTransactionResponse>("/transactions/refresh", request);
+		}
+
+		/// <summary>
+		/// The /transactions/refresh endpoint; It initiates an on-demand extraction to fetch the newest transactions for an Item. This on-demand extraction takes place in addition to the periodic extractions that automatically occur multiple times a day for any Transactions-enabled Item. If changes to transactions are discovered after calling /transactions/refresh, Plaid will fire a webhook: TRANSACTIONS_REMOVED will be fired if any removed transactions are detected, and DEFAULT_UPDATE will be fired if any new transactions are detected. New transactions can be fetched by calling /transactions/get.
+		/// </summary>
+		/// <param name="accessToken">The access token.</param>
+		/// <returns></returns>
+		/// <exception cref="System.ArgumentNullException">accessToken</exception>
+		public Task<Response<Transactions.RefreshTransactionResponse>> RefreshTransactionData(string accessToken)
+		{
+			if (string.IsNullOrEmpty(accessToken)) throw new ArgumentNullException(nameof(accessToken));
+			return RefreshTransactionData(new Transactions.RefreshTransactionRequest(accessToken));
+		}
+
+		/// <summary>
+		/// The /categories/get endpoint; get detailed information on categories returned by Plaid.
+		/// </summary>
+		public Task<Response<Transactions.GetCategoriesResponse>> GetCategoriesAsync()
+		{
+			return PostRequest<Transactions.GetCategoriesRequest, Transactions.GetCategoriesResponse>("/categories/get", new Transactions.GetCategoriesRequest());
+		}
+
+		/// <summary>
+		/// The /accounts/balance/get endpoint;  returns the real-time balance for each of an Item's accounts.
+		/// While other endpoints may return a balance object, only /accounts/balance/get forces the available and current balance fields to be refreshed rather than cached.
+		/// This endpoint can be used for existing Items that were added via any of Plaid’s other products. This endpoint can be used as long as Link has been initialized with any other product, balance itself is not a product that can be used to initialize Link.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Balance.GetBalanceResponse>> GetAccountsBalanceAsync(Balance.GetBalanceRequest request)
+		{
+			return PostRequest<Balance.GetBalanceRequest, Balance.GetBalanceResponse>("/accounts/balance/get", request);
+		}
+
 		internal async Task<Response<TResponse>> PostRequest<TRequest, TResponse>(string path, TRequest model) where TRequest : RequestBase2 where TResponse : PlaidResponseBase
 		{
 			// Create HTTP Request
-
-			model.Secret = _secret;
-			model.ClientId = _client_id;
 
 			string url = GetEndpoint(path);
 			string body = System.Text.Json.JsonSerializer.Serialize(model, typeof(TRequest), _serializerOptions);
 
 			var request = new HttpRequestMessage(HttpMethod.Post, url);
 			request.Headers.Add("Plaid-Version", _version);
+			request.Headers.Add("PLAID-SECRET", _secret);
+			request.Headers.Add("PLAID-CLIENT-ID", _client_id);
 			request.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json"); ;
 #if DEBUG
 			WriteToDebugger(request, body);
@@ -124,6 +168,7 @@ namespace Acklann.Plaid
 
 		#region Backing Members
 
+		private const string VERSION = "2020-09-14";
 		private readonly IHttpClientFactory _factory;
 		private readonly string _client_id, _secret, _baseUrl, _version;
 		private readonly System.Text.Json.JsonSerializerOptions _serializerOptions = GetSerializerOptions();
@@ -142,6 +187,16 @@ namespace Acklann.Plaid
 
 			model = default;
 			return false;
+		}
+
+		private static string GetBaseUrl(Environment environment)
+		{
+			return environment switch
+			{
+				Environment.Production => "https://production.plaid.com",
+				Environment.Development => "https://development.plaid.com",
+				_ => "https://sandbox.plaid.com",
+			};
 		}
 
 		private static IHttpClientFactory CreateDefaultFactory()

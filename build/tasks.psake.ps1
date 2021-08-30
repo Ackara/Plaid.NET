@@ -103,7 +103,8 @@ Task "Publish-NuGet-Packages" -alias "push-nuget" -description "This task publis
     foreach ($nupkg in Get-ChildItem $ArtifactsFolder -Filter "*.nupkg")
     {
         Write-Separator "dotnet nuget push '$($nupkg.Name)'";
-        Exec { &dotnet nuget push $nupkg.FullName --source "https://api.nuget.org/v3/index.json"; }
+        #Exec { &dotnet nuget push $nupkg.FullName --source "https://api.nuget.org/v3/index.json"; }
+        Exec { &dotnet nuget push $nupkg.FullName --source "tekcarillc" --api-key az; }
     }
 }
 

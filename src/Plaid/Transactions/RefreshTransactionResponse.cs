@@ -1,6 +1,10 @@
 namespace Acklann.Plaid.Transactions
 {
-	public class RefreshTransactionResponse : ResponseBase
+	/// <summary>
+	/// Response to <see cref="RefreshTransactionRequest"/>
+	/// </summary>
+	/// <seealso cref="Acklann.Plaid.PlaidResponseBase" />
+	public class RefreshTransactionResponse : PlaidResponseBase
 	{
 	}
 }

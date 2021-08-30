@@ -15,6 +15,13 @@ namespace Acklann.Plaid.Transactions
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GetTransactionsRequest"/> class.
+		/// </summary>
+		/// <param name="accessToken">The access token.</param>
+		/// <param name="startDate">The start date.</param>
+		/// <param name="endDate">The end date.</param>
+		/// <exception cref="System.ArgumentNullException">accessToken</exception>
 		public GetTransactionsRequest(string accessToken, DateTime startDate, DateTime endDate)
 		{
 			AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));

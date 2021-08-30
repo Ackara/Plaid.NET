@@ -12,12 +12,12 @@ namespace Acklann.Plaid
 		{
 		}
 
-		public Client(string baseUrl, string clientId, string secret, string version = VERSION, IHttpClientFactory factory = default)
+		public Client(string baseUrl, string clientId, string secret, string version, IHttpClientFactory factory)
 		{
-			_secret = secret ?? throw new ArgumentNullException(nameof(secret));
 			_baseUrl = baseUrl ?? throw new ArgumentNullException(nameof(baseUrl));
-			_client_id = clientId ?? throw new ArgumentNullException(nameof(clientId));
 			_version = version ?? throw new ArgumentNullException(nameof(version));
+			_secret = secret ?? Configuration.PlaidConfiguration.Secret ?? throw new ArgumentNullException(nameof(secret));
+			_client_id = clientId ?? Configuration.PlaidConfiguration.ClientId ?? throw new ArgumentNullException(nameof(clientId));
 			_factory = factory ?? CreateDefaultFactory() ?? throw new ArgumentNullException(nameof(factory));
 		}
 

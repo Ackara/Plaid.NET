@@ -7,7 +7,7 @@ namespace Acklann.Plaid.Item
 	/// Response to <see cref="Item.GetItemRequest"/>.
 	/// </summary>
 	/// <seealso cref="Acklann.Plaid.ResponseBase" />
-	public class GetItemResponse : ResponseBase
+	public class GetItemResponse : PlaidResponseBase
 	{
 		/// <summary>
 		/// Metadata about the Item.
@@ -24,7 +24,7 @@ namespace Acklann.Plaid.Item
 		/// <summary>
 		/// Information about the last transaction, webhook statuses of the Item.
 		/// </summary>
-		public partial class ItemStatus
+		public class ItemStatus
 		{
 			/// <summary>
 			/// Information about the last successful and failed investments update for the Item.
@@ -48,7 +48,7 @@ namespace Acklann.Plaid.Item
 		/// <summary>
 		/// Information about the last webhook fired for the Item.
 		/// </summary>
-		public partial class LastWebhook
+		public class LastWebhook
 		{
 			/// <summary>
 			/// Timestamp of when the webhook was fired.
@@ -66,7 +66,7 @@ namespace Acklann.Plaid.Item
 		/// <summary>
 		/// Information about the last successful and failed transactions update for the Item.
 		/// </summary>
-		public partial class UpdateInfo
+		public class UpdateInfo
 		{
 			/// <summary>
 			/// Timestamp of the last successful transactions update for the Item.

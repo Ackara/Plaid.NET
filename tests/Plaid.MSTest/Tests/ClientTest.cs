@@ -132,43 +132,7 @@ namespace Acklann.Plaid.Tests
 
 		// ==================== Transaction ==================== //
 
-		[TestMethod]
-		public void Can_get_transactions()
-		{
-			// Arrange
-			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Transactions.GetTransactionsRequest().UseDefaults();
-
-			// Act
-			var result = sut.FetchTransactionsAsync(request).Result;
-
-			// Assert
-			result.IsSuccessStatusCode.ShouldBeTrue();
-			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.TransactionsReturned.ShouldBeGreaterThan(0);
-			result.Transactions.Length.ShouldBeGreaterThan(0);
-			result.Transactions[0].Amount.ShouldBeGreaterThan(0);
-		}
-
-		[TestMethod]
-		public void Can_refresh_transactions()
-		{
-			// Arrange
-			var request = new Transactions.RefreshTransactionRequest();
-			request.UseDefaults();
-
-			// Act
-			var sut = new PlaidClient(Environment.Sandbox);
-			var result = sut.RefreshTransactionsAsync(request).Result;
-
-			// Assert
-			result.ShouldNotBeNull();
-			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.IsSuccessStatusCode.ShouldBeTrue();
-		}
-
 		// ==================== Item ==================== //
-
 
 		//[TestMethod]
 		public void Can_remove_an_item()

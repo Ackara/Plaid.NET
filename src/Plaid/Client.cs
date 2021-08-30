@@ -22,10 +22,10 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		/// <param name="sandbox">if set to <c>true</c> allows you to create a public_token without using Link.</param>
 		/// <returns></returns>
-		public Task<Response<Token.CreateLinkTokenResponse>> CreateLinkToken(Token.CreateLinkTokenRequest request, bool sandbox = false)
+		public Task<Response<Token.CreateLinkTokenResponse>> CreateLinkTokenAsync(Token.CreateLinkTokenRequest request, bool sandbox = false)
 		{
 			string path = sandbox ? "/sandbox/public_token/create" : "/link/token/create";
-			return SendRequestAsync<Token.CreateLinkTokenRequest, Token.CreateLinkTokenResponse>(path, request);
+			return PostRequest<Token.CreateLinkTokenRequest, Token.CreateLinkTokenResponse>(path, request);
 		}
 
 		/// <summary>
@@ -33,9 +33,9 @@ namespace Acklann.Plaid
 		/// The created public_token maps to a new Sandbox Item. You can then call <see cref="ExchangeTokenForAccessTokenAsync(Item.ExchangePublicTokenRequest)"/> to exchange the public_token for an access_token and perform all API actions.
 		/// </summary>
 		/// <param name="request">The request.</param>
-		public Task<Response<Sandbox.CreatePublicTokenResponse>> CreateSandboxPublicToken(Sandbox.CreatePublicTokenRequest request)
+		public Task<Response<Sandbox.CreatePublicTokenResponse>> CreateSandboxPublicTokenAsync(Sandbox.CreatePublicTokenRequest request)
 		{
-			return SendRequestAsync<Sandbox.CreatePublicTokenRequest, Sandbox.CreatePublicTokenResponse>("/sandbox/public_token/create", request);
+			return PostRequest<Sandbox.CreatePublicTokenRequest, Sandbox.CreatePublicTokenResponse>("/sandbox/public_token/create", request);
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		public Task<Response<Token.ExchangePublicTokenResponse>> ExchangeTokenForAccessTokenAsync(Token.ExchangePublicTokenRequest request)
 		{
-			return SendRequestAsync<Token.ExchangePublicTokenRequest, Token.ExchangePublicTokenResponse>("/item/public_token/exchange", request);
+			return PostRequest<Token.ExchangePublicTokenRequest, Token.ExchangePublicTokenResponse>("/item/public_token/exchange", request);
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		public Task<Response<Institution.GetAllInstitutionsResponse>> GetAllInstituionsAsync(Institution.GetAllInstitutionsRequest request)
 		{
-			return SendRequestAsync<Institution.GetAllInstitutionsRequest, Institution.GetAllInstitutionsResponse>("/institutions/get", request);
+			return PostRequest<Institution.GetAllInstitutionsRequest, Institution.GetAllInstitutionsResponse>("/institutions/get", request);
 		}
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		public Task<Response<Institution.GetInstitutionByIdResponse>> GetInstitutionByIdAsync(Institution.GetInstitutionByIdRequest request)
 		{
-			return SendRequestAsync<Institution.GetInstitutionByIdRequest, Institution.GetInstitutionByIdResponse>("/institutions/get_by_id", request);
+			return PostRequest<Institution.GetInstitutionByIdRequest, Institution.GetInstitutionByIdResponse>("/institutions/get_by_id", request);
 		}
 
 		/// <summary>
@@ -71,10 +71,19 @@ namespace Acklann.Plaid
 		/// <param name="request">The request.</param>
 		public Task<Response<Item.GetItemResponse>> GetItemAsync(Item.GetItemRequest request)
 		{
-			return SendRequestAsync<Item.GetItemRequest, Item.GetItemResponse>("/item/get", request);
+			return PostRequest<Item.GetItemRequest, Item.GetItemResponse>("/item/get", request);
 		}
 
-		internal async Task<Response<TResponse>> SendRequestAsync<TRequest, TResponse>(string path, TRequest model) where TRequest : RequestBase2
+		/// <summary>
+		/// The /transactions/get endpoint; retrieves and refresh 24 months of historical transaction data, including geolocation, merchant, and category information.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		public Task<Response<Transactions.GetTransactionsResponse>> GetTransactionsAsync(Transactions.GetTransactionsRequest request)
+		{
+			return PostRequest<Transactions.GetTransactionsRequest, Transactions.GetTransactionsResponse>("/transactions/get", request);
+		}
+
+		internal async Task<Response<TResponse>> PostRequest<TRequest, TResponse>(string path, TRequest model) where TRequest : RequestBase2 where TResponse : PlaidResponseBase
 		{
 			// Create HTTP Request
 
@@ -101,8 +110,9 @@ namespace Acklann.Plaid
 #endif
 				if (response.IsSuccessStatusCode)
 				{
-					TResponse data = System.Text.Json.JsonSerializer.Deserialize<TResponse>(json, _serializerOptions);
-					return new Response<TResponse>(data, (int)response.StatusCode);
+					bool parsed = TryDeserialize(json, out TResponse data);
+					if (parsed) return new Response<TResponse>(data, (int)response.StatusCode);
+					else return new Response<TResponse>(400, CreateInvalidResultError(typeof(TResponse)));
 				}
 				else
 				{
@@ -120,9 +130,18 @@ namespace Acklann.Plaid
 
 		private string GetEndpoint(string path) => string.Concat(_baseUrl, path);
 
-		private static bool TryDeserialize(string json, out object model)
+		private bool TryDeserialize<T>(string json, out T model)
 		{
-			throw new System.NotImplementedException();
+			try
+			{
+				model = System.Text.Json.JsonSerializer.Deserialize<T>(json, _serializerOptions);
+				return true;
+			}
+			catch (System.Text.Json.JsonException ex) { System.Diagnostics.Debug.WriteLine(ex.Message); }
+			catch (ArgumentException) { }
+
+			model = default;
+			return false;
 		}
 
 		private static IHttpClientFactory CreateDefaultFactory()
@@ -143,6 +162,16 @@ namespace Acklann.Plaid
 				DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
 			};
 			return options;
+		}
+
+		private static Exceptions.PliadError CreateInvalidResultError(Type type)
+		{
+			return new Exceptions.PliadError
+			{
+				Type = "INVALID_RESULT",
+				Message = $"An unexpected error occurred while de-serializing '{type.FullName}'",
+				Code = null,
+			};
 		}
 
 		private static void WriteToDebugger(HttpRequestMessage request, string body)

@@ -115,26 +115,6 @@ namespace Acklann.Plaid
 			return PostAsync<Management.UpdateAccessTokenVersionResponse>("/item/access_token/update_version", request);
 		}
 
-		/* Transactions */
-
-		/// <summary>
-		/// Fetches the transactions asynchronous.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		public Task<Transactions.GetTransactionsResponse> FetchTransactionsAsync(Transactions.GetTransactionsRequest request)
-		{
-			return PostAsync<Transactions.GetTransactionsResponse>("/transactions/get", request);
-		}
-
-		/// <summary>
-		///  Initiates an on-demand extraction to fetch the newest transactions for an <see cref="Entity.Item"/>.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		public Task<Transactions.RefreshTransactionResponse> RefreshTransactionsAsync(Transactions.RefreshTransactionRequest request)
-		{
-			return PostAsync<Transactions.RefreshTransactionResponse>("/transactions/refresh", request);
-		}
-
 		/* Item Management */
 
 		/// <summary>

@@ -55,6 +55,6 @@ namespace Acklann.Plaid.Entity
 		public string UpdateType { get; set; }
 
 		[JsonPropertyName("error")]
-		public Exceptions.PliadError Error { get; set; }
+		public ItemError Error { get; set; }
 	}
 }

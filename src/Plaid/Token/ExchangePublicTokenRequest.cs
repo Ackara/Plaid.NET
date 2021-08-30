@@ -27,7 +27,7 @@ namespace Acklann.Plaid.Token
 		}
 
 		/// <summary>
-		/// Your public_token, obtained from the Link onSuccess callback or <see cref="Client.CreateSandboxPublicToken(Sandbox.CreatePublicTokenRequest)"/>.
+		/// Your public_token, obtained from the Link onSuccess callback or <see cref="Client.CreateSandboxPublicTokenAsync(Sandbox.CreatePublicTokenRequest)"/>.
 		/// </summary>
 		[JsonPropertyName("public_token")]
 		public string PublicToken { get; set; }

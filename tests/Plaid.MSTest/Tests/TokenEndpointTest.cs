@@ -17,7 +17,7 @@ namespace Acklann.Plaid.Tests
 			var sut = CreateClient();
 
 			// Act
-			var response = await sut.CreateLinkToken(request);
+			var response = await sut.CreateLinkTokenAsync(request);
 
 			// Assert
 			response.Succeeded.ShouldBeTrue(response.Message);
@@ -32,7 +32,7 @@ namespace Acklann.Plaid.Tests
 			var sut = CreateClient();
 
 			// Act
-			var publicToken = await sut.CreateSandboxPublicToken(new Sandbox.CreatePublicTokenRequest("ins_129571", "assets", "auth", "balance", "transactions", "identity"));
+			var publicToken = await sut.CreateSandboxPublicTokenAsync(new Sandbox.CreatePublicTokenRequest("ins_129571", "assets", "auth", "balance", "transactions", "identity"));
 			if (publicToken.Succeeded == false) Assert.Fail(publicToken.Message);
 
 			var response = await sut.ExchangeTokenForAccessTokenAsync(new Token.ExchangePublicTokenRequest(publicToken.Data.PublicToken));

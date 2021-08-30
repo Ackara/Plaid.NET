@@ -36,7 +36,7 @@ namespace Acklann.Plaid
 		public static string CreateAccessToken(string institutionId, params string[] products)
 		{
 			var client = CreateClient();
-			var response = client.CreateSandboxPublicToken(new Sandbox.CreatePublicTokenRequest(institutionId, products)).Result;
+			var response = client.CreateSandboxPublicTokenAsync(new Sandbox.CreatePublicTokenRequest(institutionId, products)).Result;
 			if (response.Succeeded == false) Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail(response.Message);
 
 			var exchange = client.ExchangeTokenForAccessTokenAsync(new Token.ExchangePublicTokenRequest(response.Data.PublicToken)).Result;

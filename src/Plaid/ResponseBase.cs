@@ -10,7 +10,6 @@ namespace Acklann.Plaid
 	{
 		public ResponseBase()
 		{
-
 		}
 
 		/// <summary>

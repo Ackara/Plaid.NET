@@ -21,21 +21,22 @@ namespace Plaid.Link.Controllers
 		[HttpPost]
 		public async System.Threading.Tasks.Task<IActionResult> CreateLinkAsync()
 		{
-			var client = new PlaidClient(_clientId, _secrets, null, Acklann.Plaid.Environment.Sandbox);
-			var response = await client.CreateLinkToken(new Acklann.Plaid.Management.CreateLinkTokenRequest
-			{
-				ClientName = "Example",
-				ClientId = _clientId,
-				Secret = _secrets,
-				CountryCodes = new string[] { "US" },
-				Products = new string[] { "auth", "transactions" },
-				User = new Acklann.Plaid.Management.CreateLinkTokenRequest.UserInfo
-				{
-					ClientUserId = Guid.NewGuid().ToString()
-				}
-			});
+			//var client = new PlaidClient(_clientId, _secrets, null, Acklann.Plaid.Environment.Sandbox);
+			//var response = await client.CreateLinkToken(new Acklann.Plaid.Management.CreateLinkTokenRequest
+			//{
+			//	ClientName = "Example",
+			//	ClientId = _clientId,
+			//	Secret = _secrets,
+			//	CountryCodes = new string[] { "US" },
+			//	Products = new string[] { "auth", "transactions" },
+			//	User = new Acklann.Plaid.Management.CreateLinkTokenRequest.UserInfo
+			//	{
+			//		ClientUserId = Guid.NewGuid().ToString()
+			//	}
+			//});
 
-			return Json(response);
+			//return Json(response);
+			throw new System.NotImplementedException();
 		}
 
 		[HttpPost]

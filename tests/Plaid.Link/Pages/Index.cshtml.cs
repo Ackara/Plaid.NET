@@ -20,21 +20,22 @@ namespace Acklann.Plaid.Link.Pages
 
 		public async Task OnGetAsync()
 		{
-			var client = new PlaidClient(_clientId, _secrets, null, Environment.Sandbox);
-			var response = await client.CreateLinkToken(new Management.CreateLinkTokenRequest
-			{
-				ClientName = "Example",
-				ClientId = _clientId,
-				Secret = _secrets,
-				CountryCodes = new string[] { "US" },
-				Products = new string[] { "auth", "transactions" },
-				User = new Management.CreateLinkTokenRequest.UserInfo
-				{
-					ClientUserId = Guid.NewGuid().ToString()
-				}
-			});
+			//var client = new PlaidClient(_clientId, _secrets, null, Environment.Sandbox);
+			//var response = await client.CreateLinkToken(new Management.CreateLinkTokenRequest
+			//{
+			//	ClientName = "Example",
+			//	ClientId = _clientId,
+			//	Secret = _secrets,
+			//	CountryCodes = new string[] { "US" },
+			//	Products = new string[] { "auth", "transactions" },
+			//	User = new Management.CreateLinkTokenRequest.UserInfo
+			//	{
+			//		ClientUserId = Guid.NewGuid().ToString()
+			//	}
+			//});
 
-			LinkToken = response.LinkToken;
+			//LinkToken = response.LinkToken;
+			throw new System.NotImplementedException();
 		}
 
 		#region Private Members

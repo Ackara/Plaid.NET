@@ -74,16 +74,7 @@ namespace Acklann.Plaid
 		// TODO: /link/token/get
 		// TODO: /item/access_token/invalidate
 
-		/// <summary>
-		/// The /link/token/create endpoint creates a link_token, which is required as a parameter when initializing Link.
-		/// Once Link has been initialized, it returns a public_token, which can then be exchanged for an access_token via /item/public_token/exchange as part of the main Link flow.
-		/// </summary>
-		/// <param name="request">The request body</param>
-		public Task<Management.CreateLinkTokenResponse> CreateLinkToken(Management.CreateLinkTokenRequest request)
-		{
-			return PostAsync<Management.CreateLinkTokenResponse>("/link/token/create", request);
-		}
-
+		
 		/// <summary>
 		/// <summary>
 		/// Exchanges a Link public_token for an API access_token.

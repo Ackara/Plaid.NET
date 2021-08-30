@@ -30,6 +30,10 @@ namespace Acklann.Plaid
 			return System.IO.Directory.EnumerateFiles(Directory, pattern, SearchOption.AllDirectories);
 		}
 
+		public static string GetClientId() => GetValue("plaid:client_id");
+
+		public static string GetSecret() => GetValue("plaid:secret");
+
 		public static string GetValue(string key)
 			=> GetValue<string>(key) ?? throw new ArgumentNullException(key);
 

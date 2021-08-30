@@ -6,7 +6,7 @@ using System.Linq;
 namespace Acklann.Plaid.Tests
 {
 	[TestClass]
-	public class PlaidClientTest
+	public class ClientTest
 	{
 		// ==================== Account ==================== //
 
@@ -189,32 +189,7 @@ namespace Acklann.Plaid.Tests
 
 		// ==================== Token ==================== //
 
-		[TestMethod]
-		public void Can_create_link_token()
-		{
-			// Arrange
-			var sut = new PlaidClient(Environment.Sandbox);
-			var request = new Management.CreateLinkTokenRequest()
-			{
-				ClientName = "Example Client Name",
-				Language = "en",
-				CountryCodes = new string[] { "US" },
-				User = new Management.CreateLinkTokenRequest.UserInfo
-				{
-					ClientUserId = Guid.NewGuid().ToString()
-				},
-				Products = new string[] { "auth" }
-			}.UseDefaultsWithNoAccessToken();
-
-			// Act
-			var result = sut.CreateLinkToken(request).Result;
-
-			// Assert
-			result.IsSuccessStatusCode.ShouldBeTrue();
-			result.RequestId.ShouldNotBeNullOrEmpty();
-			result.LinkToken.ShouldNotBeNullOrEmpty();
-			result.Expiration.ShouldNotBeNullOrEmpty();
-		}
+		
 
 		[TestMethod]
 		public void Can_exchange_link_token_for_access_token()

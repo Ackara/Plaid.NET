@@ -53,6 +53,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="appsettings.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="TestData\institution_response.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

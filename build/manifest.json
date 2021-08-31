@@ -1,24 +1,22 @@
 ﻿{
-	"name": "Plaid.NET",
-	"description": "A client api for plaid.com banking service.",
-	"version":
-	{
-		"major": 0,
-		"minor": 1,
-		"patch": 4
-	},
-	"authors": "Ackara",
-	"company": "Ackara",
-	"copyright": "Copyright {year} {company}, All Rights Reserved.",
-	"website": "https://github.com/{company}/{name}",
-	"repository": "https://github.com/{company}/{name}.git",
-	"license": "https://github.com/{company}/{name}/blob/master/LICENSE",
-	"releaseNotes": "https://github.com/{company}/{name}/blob/master/changelog.md",
-	"icon": "icon.png",
-	"tags": "plaid banking api",
-	"branchVersionMap":
-	{
-		"production": "C",
-		"default": "x.y.z-\\beta"
-	}
+  "name": "Plaid.NET",
+  "description": "A client api for plaid.com banking service.",
+  "version": {
+    "major": 0,
+    "minor": 1,
+    "patch": 5
+  },
+  "authors": "Ackara",
+  "company": "Ackara",
+  "copyright": "Copyright {year} {company}, All Rights Reserved.",
+  "website": "https://github.com/{company}/{name}",
+  "repository": "https://github.com/{company}/{name}.git",
+  "license": "https://github.com/{company}/{name}/blob/master/LICENSE",
+  "releaseNotes": "https://github.com/{company}/{name}/blob/master/changelog.md",
+  "icon": "icon.png",
+  "tags": "plaid banking api",
+  "branchVersionMap": {
+    "production": "C",
+    "default": "x.y.z-\\beta"
+  }
 }

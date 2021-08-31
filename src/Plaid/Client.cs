@@ -7,6 +7,11 @@ namespace Acklann.Plaid
 {
 	public class Client
 	{
+		public Client(Environment environment, IHttpClientFactory factory)
+			: this(GetBaseUrl(environment), null, null, VERSION, factory)
+		{
+		}
+
 		public Client(Environment environment, string clientId, string secret)
 			: this(GetBaseUrl(environment), clientId, secret, VERSION, default)
 		{

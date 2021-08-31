@@ -6,9 +6,9 @@
 	
 <Title>Plaid.NET</Title>
 <Description>A client api for plaid.com banking service.</Description>
-<Version>0.1.4</Version>
-<AssemblyVersion>0.1.4</AssemblyVersion>
-<AssemblyFileVersion>0.1.4</AssemblyFileVersion>
+<Version>0.1.5</Version>
+<AssemblyVersion>0.1.5</AssemblyVersion>
+<AssemblyFileVersion>0.1.5</AssemblyFileVersion>
 <PackageIcon>icon.png</PackageIcon>
 <RepositoryUrl>https://github.com/Ackara/Plaid.NET.git</RepositoryUrl>
 <PackageProjectUrl>https://github.com/Ackara/Plaid.NET</PackageProjectUrl>
@@ -16,7 +16,7 @@
 <PackageTags>plaid banking api</PackageTags>
 <Authors>Ackara</Authors>
 <Company>Ackara</Company>
-<Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+<Copyright>Copyright 2021 Ackara, All Rights Reserved.</Copyright>
 <PackageLicenseFile>https://github.com/Ackara/Plaid.NET/blob/master/LICENSE</PackageLicenseFile>
 </PropertyGroup>
 
